@@ -22,9 +22,9 @@ public class MapsV1 {
         ArrayList<TItem> aItems = new ArrayList<TItem>();
         
         aItems.add(new TItem());
-        aItems.get(aItems.size()-1).setName("miniSol");
-        aItems.get(aItems.size()-1).setPos(2f, 8f, -20f);
-        aItems.get(aItems.size()-1).setType_item(Dictionary.SUN);
+        aItems.get(aItems.size()-1).setName("isla");
+        aItems.get(aItems.size()-1).setPos(2f, 0f, -20f);
+        aItems.get(aItems.size()-1).setType_item(Dictionary.BASIC_ELEVATION);
         
         aItems.add(new TItem());
         aItems.get(aItems.size()-1).setName("cubo1");
@@ -40,7 +40,7 @@ public class MapsV1 {
         aItems.add(new TItem());
         aItems.get(aItems.size()-1).setName("cubo3");
         aItems.get(aItems.size()-1).setPos(2f, 5f, -20f);
-        aItems.get(aItems.size()-1).setType_item(Dictionary.BOX);
+        aItems.get(aItems.size()-1).setType_item(Dictionary.SUN);
         
         mapa1.setItem(aItems);
         
@@ -161,9 +161,9 @@ public class MapsV1 {
         ArrayList<TItem> aItems = new ArrayList<TItem>();
         System.out.println("setting ocean");
         aItems.add(new TItem());
-        aItems.get(aItems.size()-1).setName("ocean");
+        aItems.get(aItems.size()-1).setName("ISLA_CALAVERA");
         aItems.get(aItems.size()-1).setPos(0f, -1f, -20f);
-        aItems.get(aItems.size()-1).setType_item(Dictionary.OCEAN);
+        aItems.get(aItems.size()-1).setType_item(Dictionary.ISLA_CALAVERA);
         
         mapa1.setItem(aItems);
         
