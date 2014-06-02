@@ -22,4 +22,5 @@ public class Dictionary {
     public static final String OCEAN = "ocean";
     public static final String CLOUD = "cloud";
     public static final String BASIC_ELEVATION = "basic elevation";
+    public static final String ISLA_CALAVERA = "ISLA_CALAVERA";
 }

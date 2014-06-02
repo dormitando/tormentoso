@@ -22,7 +22,6 @@ import java.util.ArrayList;
  */
 public abstract class AssetGeneratorImplements implements AssetGeneratorInterface {
 
-
     @Override
     public Node makeReference(AssetManager assetManager) {
         Node node = new Node("reference_map");
@@ -135,8 +134,11 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                     n.attachChild(this.makeGreyCloud(assetManager, item.getName(),
                             item.getPx(), item.getPy(), item.getPz()));
                     break;
-               case Dictionary.BASIC_ELEVATION:
+                case Dictionary.BASIC_ELEVATION:
                     n.attachChild(this.makeBaseElevation(assetManager));
+                    break;
+                case Dictionary.ISLA_CALAVERA:
+                    n.attachChild(this.makeIslaCalavera(assetManager));
                     break;
             }
             item = mapa.nextItem();
@@ -180,7 +182,7 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
 
     @Override
     public Spatial makeSky(AssetManager assetManager, String name) {
-  BasicGeometry geom = new BasicGeometry();
+        BasicGeometry geom = new BasicGeometry();
         return geom.makeAsset(assetManager, "Models/background/sky_blue.j3o",
                 0, 0, 0, //position
                 1, 1, 1, //scale
@@ -241,5 +243,14 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
 //                makeSphere(assetManager, name,
 //                30, 30, radius, x, y, z, color);
     }
-    
+
+    @Override
+    public Node makeIslaCalavera(AssetManager assetMaster) {
+        BasicGeometry miniSun = new BasicGeometry();
+        return miniSun.makeElevation(assetMaster, "isla base",
+                "Textures/Terrain/splat/alphamap.png",
+                "Textures/islands/calavera.png");
+//                makeSphere(assetManager, name,
+//                30, 30, radius, x, y, z, color);
+    }
 }

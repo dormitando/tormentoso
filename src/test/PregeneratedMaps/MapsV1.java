@@ -161,9 +161,9 @@ public class MapsV1 {
         ArrayList<TItem> aItems = new ArrayList<TItem>();
         System.out.println("setting ocean");
         aItems.add(new TItem());
-        aItems.get(aItems.size()-1).setName("ocean");
+        aItems.get(aItems.size()-1).setName("ISLA_CALAVERA");
         aItems.get(aItems.size()-1).setPos(0f, -1f, -20f);
-        aItems.get(aItems.size()-1).setType_item(Dictionary.OCEAN);
+        aItems.get(aItems.size()-1).setType_item(Dictionary.ISLA_CALAVERA);
         
         mapa1.setItem(aItems);
         
