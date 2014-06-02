@@ -22,6 +22,7 @@ import java.util.ArrayList;
  */
 public abstract class AssetGeneratorImplements implements AssetGeneratorInterface {
 
+
     @Override
     public Node makeReference(AssetManager assetManager) {
         Node node = new Node("reference_map");
@@ -172,6 +173,15 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                 x, y, z, //position
                 1, 1, 1, //scale
                 0, 0, 0);//rotate
+    }
+
+    @Override
+    public Spatial makeSky(AssetManager assetManager, String name) {
+  BasicGeometry geom = new BasicGeometry();
+        return geom.makeAsset(assetManager, "Models/background/skyblue.j3o",
+                0, 0, 0, //position
+                1, 1, 1, //scale
+                0, 0, 0);//rotate   
     }
 
     @Override
