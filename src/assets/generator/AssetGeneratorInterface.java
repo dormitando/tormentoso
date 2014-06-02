@@ -8,6 +8,7 @@ import assets.entity.TMap;
 import assets.entity.TScene;
 import com.jme3.asset.AssetManager;
 import com.jme3.math.ColorRGBA;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -66,6 +67,8 @@ public interface AssetGeneratorInterface {
 
     public Node makeMap(AssetManager assetManager, TMap mapa);
 
+    public Node makeBaseElevation (AssetManager assetMaster);
+    
     public ArrayList<Node> generateScene(AssetManager assetManager, TScene scene);
 
     public Node makeReference(AssetManager assetManager);

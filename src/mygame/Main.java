@@ -149,7 +149,7 @@ public class Main extends SimpleApplication {
         waterProcessor.setReflectionScene(reflexing_water);
 
 // we set the water plane
-        Vector3f waterLocation = new Vector3f(0, -6, 0);
+        Vector3f waterLocation = new Vector3f(0, 0, 0);
         waterProcessor.setPlane(new Plane(Vector3f.UNIT_Y, waterLocation.dot(Vector3f.UNIT_Y)));
         viewPort.addProcessor(waterProcessor);
 
@@ -172,6 +172,7 @@ public class Main extends SimpleApplication {
     }
 
     private void addBackground() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AssetGeneratorInterface agen = new AssetGeneratorImplements(){};
+        reflexing_water.attachChild(agen.makeSky(assetManager, "reflex_sky"));
     }
 }
