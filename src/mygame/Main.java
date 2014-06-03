@@ -8,6 +8,7 @@ import assets.generator.AssetGeneratorInterface;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
+import com.jme3.font.BitmapText;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -34,15 +35,17 @@ import test.PregeneratedMaps.MapsV1;
  */
 public class Main extends SimpleApplication {
 
-    ArrayList<Node> maps = new ArrayList<Node>();
-    TScene scene = new TScene();
-    Integer mapsIndex = new Integer(-1);
-    Node rotating_scene = new Node("rotating_scene");
-    Node reflexing_water = new Node("reflexing water");
+    private ArrayList<Node> maps = new ArrayList<Node>();
+    private TScene scene = new TScene();
+    private Integer mapsIndex = new Integer(-1);
+    private Node rotating_scene = new Node("rotating_scene");
+    private Node reflexing_water = new Node("reflexing water");
+    private BitmapText hudText;
     private AnimChannel channel;
     private AnimControl control;
 
     public static void main(String[] args) {
+
         Main app = new Main();
 
         app.start();
@@ -77,14 +80,15 @@ public class Main extends SimpleApplication {
 
         rootNode.attachChild(be_endesa);
         viewPort.setBackgroundColor(ColorRGBA.Blue);
-        selftest();
         addBackground();
         rootNode.attachChild(reflexing_water);
         reflexing_water.attachChild(rotating_scene);
 
         initKeys();
-
+        setUpHUD();
         addWater();
+
+        selftest();
     }
 
     private void initKeys() {
@@ -126,6 +130,7 @@ public class Main extends SimpleApplication {
                     node.attachChild(maps.get(mapsIndex));
                 }
             }
+            hudText.setText(maps.get(mapsIndex).getName());
 
         }
     };
@@ -139,7 +144,7 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(agen.makeReference(assetManager));
         this.scene = testMap.genScene1();
         for (TMap scenemaps : this.scene.getMaps()) {
-            maps.add(agen.makeMap(assetManager, scenemaps));
+            maps.add(agen.makeMap(assetManager, scenemaps, hudText));
         }
     }
 
@@ -172,7 +177,17 @@ public class Main extends SimpleApplication {
     }
 
     private void addBackground() {
-        AssetGeneratorInterface agen = new AssetGeneratorImplements(){};
+        AssetGeneratorInterface agen = new AssetGeneratorImplements() {
+        };
         reflexing_water.attachChild(agen.makeSky(assetManager, "reflex_sky"));
+    }
+
+    private void setUpHUD() {
+        hudText  = new BitmapText(guiFont, false);
+        hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
+        hudText.setColor(ColorRGBA.Blue);                             // font color
+        hudText.setText("Holita vecino");             // the text
+        hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
+        guiNode.attachChild(hudText);
     }
 }

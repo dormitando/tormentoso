@@ -10,6 +10,7 @@ import assets.entity.TMap;
 import assets.entity.TScene;
 import assets.geometries.BasicGeometry;
 import com.jme3.asset.AssetManager;
+import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -96,9 +97,10 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     }
 
     @Override
-    public Node makeMap(AssetManager assetManager, TMap mapa) {
+    public Node makeMap(AssetManager assetManager, TMap mapa, BitmapText hud) {
         Node n = new Node(mapa.getName());
         TItem item = mapa.firstItem();
+        hud.setText(mapa.getName());
 
         while (item != null) {
             switch (item.getType_item()) {
@@ -131,7 +133,11 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                             item.getPx(), item.getPy(), item.getPz(), 0.2f, ColorRGBA.White));
                     break;
                 case Dictionary.CLOUD:
-                    n.attachChild(this.makeGreyCloud(assetManager, item.getName(),
+                    n.attachChild(this.makeCloud(assetManager, item.getName(),
+                            item.getPx(), item.getPy(), item.getPz()));
+                    break;               
+                case Dictionary.CLOUD_DARK:
+                    n.attachChild(this.makeCloudGrey(assetManager, item.getName(),
                             item.getPx(), item.getPy(), item.getPz()));
                     break;
                 case Dictionary.BASIC_ELEVATION:
@@ -147,26 +153,39 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     }
 
     @Override
-    public Spatial makeGreyCloud(AssetManager assetManager, String name, float x, float y, float z) {
-        BasicGeometry geom = new BasicGeometry();
-        return geom.makeAsset(assetManager, "Models/clouds/clouds.j3o",
-                x, y, z, 1, 1, 1, 0, 0, 0);
+    public Spatial makeCloudGrey(AssetManager assetManager, String name, float x, float y, float z) {
+       BasicGeometry geom = new BasicGeometry();
+         Node node = new Node();
+        node.attachChild(geom.makeCloud(assetManager,name,
+                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),x, y, z));
+        
+        return node;
     }
 
     @Override
-    public Spatial makeCloud(AssetManager assetManager,
-            float rx, float ry, float rz,
+    public Node makeCloud(AssetManager assetManager,
+            String name,
             float x, float y, float z) {
+        Node node = new Node();
         BasicGeometry geom = new BasicGeometry();
-        return geom.makeAsset(assetManager, "Models/Suzanne.mesh.j3o",
-                x, y, z, 1, 1, 1, rx, ry, rz);
+        node.attachChild(geom.makeCloud(assetManager,name,
+                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),x, y, z));
+        
+        geom = new BasicGeometry();
+        node.attachChild(geom.makeRain(assetManager,name,
+                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),x, y, z));
+        
+        
+        return node;
     }
 
     @Override
-    public ArrayList<Node> generateScene(AssetManager assetManager, TScene scene) {
+    public ArrayList<Node> generateScene(AssetManager assetManager,
+                                        TScene scene,
+                                        BitmapText hud) {
         ArrayList<Node> node = new ArrayList<Node>();
         for (TMap map : scene.getMaps()) {
-            node.add(makeMap(assetManager, map));
+            node.add(makeMap(assetManager, map, hud));
         }
         return node;
     }

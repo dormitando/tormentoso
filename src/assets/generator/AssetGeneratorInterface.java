@@ -7,6 +7,7 @@ package assets.generator;
 import assets.entity.TMap;
 import assets.entity.TScene;
 import com.jme3.asset.AssetManager;
+import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
@@ -36,7 +37,7 @@ public interface AssetGeneratorInterface {
     public Spatial makeSky(AssetManager assetManager,
             String name);
 
-    public Spatial makeGreyCloud(AssetManager assetManager,
+    public Spatial makeCloudGrey(AssetManager assetManager,
             String name,
             float x, float y, float z);
 
@@ -57,20 +58,23 @@ public interface AssetGeneratorInterface {
             float sx, float sy, float sz,
             float x, float y, float z);
 
-    public Spatial makeCloud(AssetManager assetManager,
-            float rx, float ry, float rz,
+    public Node makeCloud(AssetManager assetManager,
+            String name,
             float x, float y, float z);
+   
 
     public Geometry makeSimpleBox(AssetManager assetManager,
             String name,
             float x, float y, float z);
-
-    public Node makeMap(AssetManager assetManager, TMap mapa);
+    
+    public Node makeMap(AssetManager assetManager, TMap mapa, BitmapText hud);
 
     public Node makeBaseElevation (AssetManager assetMaster);
     public Node makeIslaCalavera (AssetManager assetMaster);
     
-    public ArrayList<Node> generateScene(AssetManager assetManager, TScene scene);
+    public ArrayList<Node> generateScene(AssetManager assetManager,
+                                        TScene scene,
+                                        BitmapText hud);
 
     public Node makeReference(AssetManager assetManager);
 }

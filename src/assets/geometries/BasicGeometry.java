@@ -8,7 +8,11 @@ import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.asset.AssetManager;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh;
+import com.jme3.effect.shapes.EmitterBoxShape;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Sphere;
@@ -156,5 +160,72 @@ public class BasicGeometry extends Geometry {
         asset.rotate(rx, ry, rz);
 
         return asset;
+    }
+
+    public Node makeCloud(AssetManager assetManager, String name,ColorRGBA color,
+            float px, float py, float pz) {
+        Node node = new Node(name);
+        node.setLocalTranslation(px, py, pz);
+        
+        ParticleEmitter fire =
+                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+        node.attachChild(fire);
+//        fire.setLocalTranslation(px,py, pz);
+        Material mat_red = new Material(assetManager,
+                "Common/MatDefs/Misc/Particle.j3md");
+        mat_red.setTexture("Texture", assetManager.loadTexture(
+                "Textures/clouds/nubes2.png"));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-2f,-1f,-2f),
+                                          new Vector3f(2f,1f,2f)));
+        fire.setMaterial(mat_red);
+        fire.setImagesX(4);
+        fire.setImagesY(4); // 2x2 texture animation
+        fire.setEndColor(color);   // red
+        fire.setStartColor(color); // yellow
+//        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
+        fire.setStartSize(1.5f);
+        fire.setEndSize(1.5f);
+        fire.setGravity(0, 0, 0);
+        fire.setLowLife(3600f);
+        fire.setHighLife(3600f);
+        fire.getParticleInfluencer().setVelocityVariation(0.3f);
+        fire.setRandomAngle(true);
+        fire.killAllParticles();
+        fire.emitAllParticles();
+
+        return node;
+    }
+    public Node makeRain(AssetManager assetManager, String name,ColorRGBA color,
+            float px, float py, float pz) {
+        Node node = new Node(name);
+        node.setLocalTranslation(px, py, pz);
+        
+        ParticleEmitter fire =
+                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 300);
+        node.attachChild(fire);
+//        fire.setLocalTranslation(px,py, pz);
+        Material mat_red = new Material(assetManager,
+                "Common/MatDefs/Misc/Particle.j3md");
+        mat_red.setTexture("Texture", assetManager.loadTexture(
+                "Textures/rain/rain.png"));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-1.5f,-1f,-1.5f),
+                                          new Vector3f(1.5f,0f,1.5f)));
+        fire.setMaterial(mat_red);
+        fire.setImagesX(4);
+        fire.setImagesY(4); // 2x2 texture animation
+        fire.setEndColor(color);   // red
+        fire.setStartColor(color); // yellow
+//        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
+        fire.setStartSize(0.5f);
+        fire.setEndSize(0.5f);
+        fire.setGravity(0, 10, 0);
+        fire.setLowLife(2f);
+        fire.setHighLife(2f);
+        fire.getParticleInfluencer().setVelocityVariation(0.3f);
+        fire.setRandomAngle(false);
+//        fire.killAllParticles();
+//        fire.emitAllParticles();
+
+        return node;
     }
 }
