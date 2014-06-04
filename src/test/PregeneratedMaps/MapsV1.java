@@ -60,15 +60,15 @@ public class MapsV1 {
         aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("cubo1");
         aItems.get(aItems.size() - 1).setPos(2f, 10f, -20f);
-        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN_MODEL);
         aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("cubo1");
         aItems.get(aItems.size() - 1).setPos(12f, 10f, -20f);
-        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_BOLT);
         aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("cubo1");
         aItems.get(aItems.size() - 1).setPos(22f, 10f, -20f);
-        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_RAIN);
         aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("cubo1");
         aItems.get(aItems.size() - 1).setPos(32f, 10f, -20f);

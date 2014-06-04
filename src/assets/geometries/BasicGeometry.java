@@ -13,8 +13,10 @@ import com.jme3.effect.ParticleMesh;
 import com.jme3.effect.shapes.EmitterBoxShape;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
@@ -162,44 +164,103 @@ public class BasicGeometry extends Geometry {
         return asset;
     }
 
-    public Node makeCloud(AssetManager assetManager, String name,ColorRGBA color,
+    public Node makeCloud(AssetManager assetManager, String name, ColorRGBA color,
             float px, float py, float pz) {
         Node node = new Node(name);
         node.setLocalTranslation(px, py, pz);
-        
+
         ParticleEmitter fire =
-                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 20);
         node.attachChild(fire);
 //        fire.setLocalTranslation(px,py, pz);
         Material mat_red = new Material(assetManager,
                 "Common/MatDefs/Misc/Particle.j3md");
-        mat_red.setTexture("Texture", assetManager.loadTexture(
-                "Textures/clouds/nubes2.png"));
-        fire.setShape(new EmitterBoxShape(new Vector3f(-2f,-1f,-2f),
-                                          new Vector3f(2f,1f,2f)));
+        mat_red = assetManager.loadMaterial("Materials/Generated/clouds-Emitter.j3m");
+
+//        mat_red.setTexture("Texture", assetManager.loadTexture(
+//                "Textures/clouds/nubes3.png"));
+//        mat_red.setTexture("DepthTexture", assetManager.loadTexture(
+//                "Textures/clouds/nubes2grey.png"));
+//        mat_red.setTexture("Texture", assetManager.loadTexture(
+//                "Effects/Smoke/Smoke.png"));
+//        mat_red.setTexture("NormalMap", 
+//                        assetManager.loadTexture("Textures/clouds/nubes2grey.png"));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-2f, -1f, -2f),
+                new Vector3f(2f, 1f, 2f)));
         fire.setMaterial(mat_red);
         fire.setImagesX(4);
         fire.setImagesY(4); // 2x2 texture animation
-        fire.setEndColor(color);   // red
-        fire.setStartColor(color); // yellow
+
+//        fire.setImagesX(1);
+//        fire.setImagesY(15); // 2x2 texture animation
+
+        ColorRGBA mycolor = ColorRGBA.LightGray;
+////        mycolor = new ColorRGBA(0.5f, 0.5f, 0.5f, 1f);
+        fire.setEndColor(mycolor);   // red
+        fire.setStartColor(mycolor); // yellow
+
+//        fire.setEndColor(new ColorRGBA(1f, 0f, 0f, 1f));   // red
+//        fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+
 //        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
         fire.setStartSize(1.5f);
         fire.setEndSize(1.5f);
         fire.setGravity(0, 0, 0);
         fire.setLowLife(3600f);
         fire.setHighLife(3600f);
-        fire.getParticleInfluencer().setVelocityVariation(0.3f);
-        fire.setRandomAngle(true);
+        fire.setParticlesPerSec(80);
+//        fire.getParticleInfluencer().setVelocityVariation(0.3f);
+        fire.setSelectRandomImage(true);
+//        fire.setRandomAngle(true);
         fire.killAllParticles();
         fire.emitAllParticles();
 
         return node;
     }
-    public Node makeRain(AssetManager assetManager, String name,ColorRGBA color,
-            float px, float py, float pz) {
+
+    public Node makeLightingBolt(AssetManager assetManager, String name, ColorRGBA color,
+            float px, float py, float pz, float length) {
+         Node node = new Node(name);
+        node.setLocalTranslation(px, py-length, pz);
+        float velCaida = 10f;
+        ParticleEmitter fire =
+                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 1);
+        node.attachChild(fire);
+//        fire.setLocalTranslation(px,py, pz);
+        Material mat_red = new Material(assetManager,
+                "Common/MatDefs/Misc/Particle.j3md");
+        mat_red.setTexture("Texture", assetManager.loadTexture(
+                "Textures/bolt/rayo.png"));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-1.5f, py-length/2, -1.5f),
+                new Vector3f(1.5f,  py-length/2, 1.5f)));
+        fire.setMaterial(mat_red);
+        fire.setImagesX(1);
+        fire.setImagesY(1); // 2x2 texture animation
+        fire.setEndColor(color);   // red
+        fire.setStartColor(color); // yellow
+        fire.setParticlesPerSec((new Double(Math.random()*8).floatValue()));
+//        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
+        float size = 2f;
+        fire.setStartSize(size);
+        fire.setEndSize(size);
+//        fire.setGravity(0, velCaida, 0);
+        float tiempo = 0.5f;
+        System.out.println(this.getClass() + " tiempo " + tiempo + " = 2*" + length + "/" + velCaida);
+        fire.setLowLife(tiempo);
+        fire.setHighLife(tiempo);
+        fire.getParticleInfluencer().setVelocityVariation(0.3f);
+        fire.setRandomAngle(false);
+//        fire.killAllParticles();
+//        fire.emitAllParticles();
+
+        return node;
+    }
+
+    public Node makeRain(AssetManager assetManager, String name, ColorRGBA color,
+            float px, float py, float pz, float length) {
         Node node = new Node(name);
         node.setLocalTranslation(px, py, pz);
-        
+        float velCaida = 10f;
         ParticleEmitter fire =
                 new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 300);
         node.attachChild(fire);
@@ -208,8 +269,8 @@ public class BasicGeometry extends Geometry {
                 "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture(
                 "Textures/rain/rain.png"));
-        fire.setShape(new EmitterBoxShape(new Vector3f(-1.5f,-1f,-1.5f),
-                                          new Vector3f(1.5f,0f,1.5f)));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-1.5f, -1f, -1.5f),
+                new Vector3f(1.5f, 0f, 1.5f)));
         fire.setMaterial(mat_red);
         fire.setImagesX(4);
         fire.setImagesY(4); // 2x2 texture animation
@@ -218,9 +279,11 @@ public class BasicGeometry extends Geometry {
 //        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
         fire.setStartSize(0.5f);
         fire.setEndSize(0.5f);
-        fire.setGravity(0, 10, 0);
-        fire.setLowLife(2f);
-        fire.setHighLife(2f);
+        fire.setGravity(0, velCaida, 0);
+        float tiempo = new Double(Math.sqrt(2 * length / velCaida)).floatValue();
+        System.out.println(this.getClass() + " tiempo " + tiempo + " = 2*" + length + "/" + velCaida);
+        fire.setLowLife(tiempo);
+        fire.setHighLife(tiempo);
         fire.getParticleInfluencer().setVelocityVariation(0.3f);
         fire.setRandomAngle(false);
 //        fire.killAllParticles();

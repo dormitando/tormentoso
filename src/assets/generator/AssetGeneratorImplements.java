@@ -27,6 +27,11 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     public Node makeReference(AssetManager assetManager) {
         Node node = new Node("reference_map");
         BasicGeometry bg = new BasicGeometry();
+        for (int y = 0; y < 10; y++) {
+            node.attachChild(bg.makeSphere(assetManager,
+                    "ref_" + (new Integer(y)).toString() + "i_" + (new Integer(y)).toString() + "j",
+                    4, 4, 0.5f, 22f, y, -20f, ColorRGBA.Black));
+        }
         for (int i = -10; i < 10; i++) {
             for (int j = -10; j < 10; j++) {
                 if (j == 0 && i == 0) {
@@ -135,10 +140,18 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                 case Dictionary.CLOUD:
                     n.attachChild(this.makeCloud(assetManager, item.getName(),
                             item.getPx(), item.getPy(), item.getPz()));
-                    break;               
+                    break;
                 case Dictionary.CLOUD_DARK:
                     n.attachChild(this.makeCloudGrey(assetManager, item.getName(),
                             item.getPx(), item.getPy(), item.getPz()));
+                    break;
+                case Dictionary.CLOUD_RAIN:
+                    n.attachChild(this.makeCloudRain(assetManager, item.getName(),
+                            item.getPx(), item.getPy(), item.getPz(), item.getPy()));
+                    break;
+                case Dictionary.CLOUD_BOLT:
+                    n.attachChild(this.makeCloudBolt(assetManager, item.getName(),
+                            item.getPx(), item.getPy(), item.getPz(), item.getPy()));
                     break;
                 case Dictionary.BASIC_ELEVATION:
                     n.attachChild(this.makeBaseElevation(assetManager));
@@ -154,11 +167,11 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
 
     @Override
     public Spatial makeCloudGrey(AssetManager assetManager, String name, float x, float y, float z) {
-       BasicGeometry geom = new BasicGeometry();
-         Node node = new Node();
-        node.attachChild(geom.makeCloud(assetManager,name,
-                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),x, y, z));
-        
+        BasicGeometry geom = new BasicGeometry();
+        Node node = new Node();
+        node.attachChild(geom.makeCloud(assetManager, name,
+                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f), x, y, z));
+
         return node;
     }
 
@@ -168,21 +181,52 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
             float x, float y, float z) {
         Node node = new Node();
         BasicGeometry geom = new BasicGeometry();
-        node.attachChild(geom.makeCloud(assetManager,name,
-                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),x, y, z));
-        
+        node.attachChild(geom.makeCloud(assetManager, name,
+                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f), x, y, z));
+
+
+
+        return node;
+    }
+
+    @Override
+    public Node makeCloudRain(AssetManager assetManager,
+            String name,
+            float x, float y, float z, float dist) {
+        Node node = new Node();
+        BasicGeometry geom = new BasicGeometry();
+        node.attachChild(geom.makeCloud(assetManager, name,
+                new ColorRGBA(1f, 0.7f, 0.7f, 0.8f), x, y, z));
+
         geom = new BasicGeometry();
-        node.attachChild(geom.makeRain(assetManager,name,
-                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),x, y, z));
-        
-        
+        node.attachChild(geom.makeRain(assetManager, name,
+                new ColorRGBA(0.7f, 0.7f, 0.7f, 0.8f),
+                x, y, z,
+                dist));
+
+
+        return node;
+    }
+
+    @Override
+    public Spatial makeCloudBolt(AssetManager assetManager, String name, float x, float y, float z, float dist) {
+        Node node = new Node();
+        BasicGeometry geom = new BasicGeometry();
+        node.attachChild(geom.makeCloud(assetManager, name,
+                new ColorRGBA(1f, 0.7f, 0.7f, 0.8f), x, y, z));
+
+        geom = new BasicGeometry();
+        node.attachChild(geom.makeLightingBolt(assetManager, name,
+                ColorRGBA.White,
+                x, y, z,
+                dist));
         return node;
     }
 
     @Override
     public ArrayList<Node> generateScene(AssetManager assetManager,
-                                        TScene scene,
-                                        BitmapText hud) {
+            TScene scene,
+            BitmapText hud) {
         ArrayList<Node> node = new ArrayList<Node>();
         for (TMap map : scene.getMaps()) {
             node.add(makeMap(assetManager, map, hud));
@@ -268,7 +312,7 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
         BasicGeometry miniSun = new BasicGeometry();
         return miniSun.makeElevation(assetMaster, "isla base",
                 "Textures/Terrain/splat/alphamap.png",
-                "Textures/islands/calavera.png");
+                "Textures/islands/mallorcaElev.png");
 //                makeSphere(assetManager, name,
 //                30, 30, radius, x, y, z, color);
     }

@@ -39,6 +39,7 @@ public class Main extends SimpleApplication {
     private TScene scene = new TScene();
     private Integer mapsIndex = new Integer(-1);
     private Node rotating_scene = new Node("rotating_scene");
+    
     private Node reflexing_water = new Node("reflexing water");
     private BitmapText hudText;
     private AnimChannel channel;
@@ -170,7 +171,7 @@ public class Main extends SimpleApplication {
 // we create the water geometry from the quad
         Geometry water = new Geometry("water", quad);
         water.setLocalRotation(new Quaternion().fromAngleAxis(-FastMath.HALF_PI, Vector3f.UNIT_X));
-        water.setLocalTranslation(-200, -6, 250);
+        water.setLocalTranslation(-200, 0, 250);
         water.setShadowMode(ShadowMode.Receive);
         water.setMaterial(waterProcessor.getMaterial());
         rootNode.attachChild(water);

@@ -41,6 +41,13 @@ public interface AssetGeneratorInterface {
             String name,
             float x, float y, float z);
 
+    public Spatial makeCloudRain(AssetManager assetManager,
+            String name,
+            float x, float y, float z, float dist);
+    public Spatial makeCloudBolt(AssetManager assetManager,
+            String name,
+            float x, float y, float z, float dist);
+
     public Spatial makeAgumon(AssetManager assetManager,
             String name,
             float x, float y, float z);
@@ -61,20 +68,20 @@ public interface AssetGeneratorInterface {
     public Node makeCloud(AssetManager assetManager,
             String name,
             float x, float y, float z);
-   
 
     public Geometry makeSimpleBox(AssetManager assetManager,
             String name,
             float x, float y, float z);
-    
+
     public Node makeMap(AssetManager assetManager, TMap mapa, BitmapText hud);
 
-    public Node makeBaseElevation (AssetManager assetMaster);
-    public Node makeIslaCalavera (AssetManager assetMaster);
-    
+    public Node makeBaseElevation(AssetManager assetMaster);
+
+    public Node makeIslaCalavera(AssetManager assetMaster);
+
     public ArrayList<Node> generateScene(AssetManager assetManager,
-                                        TScene scene,
-                                        BitmapText hud);
+            TScene scene,
+            BitmapText hud);
 
     public Node makeReference(AssetManager assetManager);
 }
