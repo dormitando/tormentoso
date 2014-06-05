@@ -159,6 +159,9 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                 case Dictionary.ISLA_CALAVERA:
                     n.attachChild(this.makeIslaCalavera(assetManager));
                     break;
+                case Dictionary.MAPA_BALEARES:
+                    n.attachChild(this.makeIslaBaleares(assetManager));
+                    break;
             }
             item = mapa.nextItem();
         }
@@ -316,4 +319,27 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
 //                makeSphere(assetManager, name,
 //                30, 30, radius, x, y, z, color);
     }
-}
+
+    @Override
+    public Node makeIslaBaleares(AssetManager assetManager) {
+//        Node node = new Node();
+//        BasicGeometry geom = new BasicGeometry();
+//        geom.makeAsset(assetManager, "Models/mapas/baleares.j3o",
+//                0, 0, 0, //position
+//                1, 1, 1, //scale
+//                0, 0, 0);//rotate  
+//        node.attachChild(geom);
+         BasicGeometry miniSun = new BasicGeometry();
+        Node node =  miniSun.makeElevation(assetManager, "isla base",
+                "Textures/islands/balearesTextura.png",
+                "Textures/islands/balearesElevation.png");
+//                makeSphere(assetManager, name,
+//                30, 30, radius, x, y, z, color);
+//        return node;
+        node.setLocalScale(0.7f, 0.1f, 0.7f);
+        node.setLocalTranslation(0, 0.5f, 0);
+        return node;
+    }
+
+
+    }

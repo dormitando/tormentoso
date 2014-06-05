@@ -59,34 +59,34 @@ public class BasicGeometry extends Geometry {
          * 1.1) Add ALPHA map (for red-blue-green coded splat textures)
          */
         mat_terrain.setTexture("Alpha", assetManager.loadTexture(
-                texture));
+                "Textures/islands/balearesAlpha.png"));
 
         /**
          * 1.2) Add GRASS texture into the red layer (Tex1).
          */
         Texture grass = assetManager.loadTexture(
-                "Textures/Terrain/splat/grass.jpg");
-        grass.setWrap(WrapMode.Repeat);
+                texture);
+//        grass.setWrap(WrapMode.);
         mat_terrain.setTexture("Tex1", grass);
-        mat_terrain.setFloat("Tex1Scale", 64f);
+        mat_terrain.setFloat("Tex1Scale", 1f);
 
         /**
          * 1.3) Add DIRT texture into the green layer (Tex2)
          */
-        Texture dirt = assetManager.loadTexture(
-                "Textures/Terrain/splat/dirt.jpg");
-        dirt.setWrap(WrapMode.Repeat);
-        mat_terrain.setTexture("Tex2", dirt);
-        mat_terrain.setFloat("Tex2Scale", 32f);
-
-        /**
-         * 1.4) Add ROAD texture into the blue layer (Tex3)
-         */
-        Texture rock = assetManager.loadTexture(
-                "Textures/Terrain/splat/road.jpg");
-        rock.setWrap(WrapMode.Repeat);
-        mat_terrain.setTexture("Tex3", rock);
-        mat_terrain.setFloat("Tex3Scale", 128f);
+//        Texture dirt = assetManager.loadTexture(
+//                "Textures/Terrain/splat/dirt.jpg");
+//        dirt.setWrap(WrapMode.Repeat);
+//        mat_terrain.setTexture("Tex2", dirt);
+//        mat_terrain.setFloat("Tex2Scale", 32f);
+//
+//        /**
+//         * 1.4) Add ROAD texture into the blue layer (Tex3)
+//         */
+//        Texture rock = assetManager.loadTexture(
+//                "Textures/Terrain/splat/road.jpg");
+//        rock.setWrap(WrapMode.Repeat);
+//        mat_terrain.setTexture("Tex3", rock);
+//        mat_terrain.setFloat("Tex3Scale", 128f);
 
         /**
          * 2. Create the height map
@@ -175,12 +175,12 @@ public class BasicGeometry extends Geometry {
 //        fire.setLocalTranslation(px,py, pz);
         Material mat_red = new Material(assetManager,
                 "Common/MatDefs/Misc/Particle.j3md");
-        mat_red = assetManager.loadMaterial("Materials/Generated/clouds-Emitter.j3m");
+//        mat_red = assetManager.loadMaterial("Materials/Generated/clouds-Emitter_1.j3m");
 
 //        mat_red.setTexture("Texture", assetManager.loadTexture(
-//                "Textures/clouds/nubes3.png"));
-//        mat_red.setTexture("DepthTexture", assetManager.loadTexture(
-//                "Textures/clouds/nubes2grey.png"));
+//                "Effects/Smoke/Smoke.png"));
+        mat_red.setTexture("Texture", assetManager.loadTexture(
+                "Textures/clouds/nubes2grey.png"));
 //        mat_red.setTexture("Texture", assetManager.loadTexture(
 //                "Effects/Smoke/Smoke.png"));
 //        mat_red.setTexture("NormalMap", 
@@ -194,24 +194,24 @@ public class BasicGeometry extends Geometry {
 //        fire.setImagesX(1);
 //        fire.setImagesY(15); // 2x2 texture animation
 
-        ColorRGBA mycolor = ColorRGBA.LightGray;
-////        mycolor = new ColorRGBA(0.5f, 0.5f, 0.5f, 1f);
-        fire.setEndColor(mycolor);   // red
-        fire.setStartColor(mycolor); // yellow
+//        ColorRGBA mycolor = ColorRGBA.Green;
+//        mycolor = new ColorRGBA(0.5f, 0.5f, 0.5f, 0.8f);
+//        fire.setEndColor(mycolor);   // red
+//        fire.setStartColor(mycolor); // yellow
 
 //        fire.setEndColor(new ColorRGBA(1f, 0f, 0f, 1f));   // red
 //        fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
 
 //        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
-        fire.setStartSize(1.5f);
-        fire.setEndSize(1.5f);
+        fire.setStartSize(2.5f);
+        fire.setEndSize(2.5f);
         fire.setGravity(0, 0, 0);
         fire.setLowLife(3600f);
         fire.setHighLife(3600f);
         fire.setParticlesPerSec(80);
 //        fire.getParticleInfluencer().setVelocityVariation(0.3f);
         fire.setSelectRandomImage(true);
-//        fire.setRandomAngle(true);
+        fire.setRandomAngle(true);
         fire.killAllParticles();
         fire.emitAllParticles();
 
@@ -224,31 +224,34 @@ public class BasicGeometry extends Geometry {
         node.setLocalTranslation(px, py-length, pz);
         float velCaida = 10f;
         ParticleEmitter fire =
-                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 1);
+                new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 2);
         node.attachChild(fire);
 //        fire.setLocalTranslation(px,py, pz);
         Material mat_red = new Material(assetManager,
                 "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture(
-                "Textures/bolt/rayo.png"));
-        fire.setShape(new EmitterBoxShape(new Vector3f(-1.5f, py-length/2, -1.5f),
-                new Vector3f(1.5f,  py-length/2, 1.5f)));
+                "Textures/bolt/rayo3_2.png"));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-1f, py-length/2, -1f),
+                new Vector3f(1f,  py-length/2, 1f)));
         fire.setMaterial(mat_red);
-        fire.setImagesX(1);
-        fire.setImagesY(1); // 2x2 texture animation
+        fire.setImagesX(3);
+        fire.setImagesY(3); // 2x2 texture animation
+        color = new ColorRGBA(0.8f, 0.8f, 0.8f, 1f);
+//        color = ColorRGBA.White;
         fire.setEndColor(color);   // red
         fire.setStartColor(color); // yellow
-        fire.setParticlesPerSec((new Double(Math.random()*8).floatValue()));
+        fire.setParticlesPerSec(8);
 //        fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
-        float size = 2f;
+        float size = 5f;
         fire.setStartSize(size);
         fire.setEndSize(size);
+        fire.setSelectRandomImage(true);
 //        fire.setGravity(0, velCaida, 0);
-        float tiempo = 0.5f;
-        System.out.println(this.getClass() + " tiempo " + tiempo + " = 2*" + length + "/" + velCaida);
+        float tiempo = 0.1f;
+//        System.out.println(this.getClass() + " tiempo " + tiempo + " = 2*" + length + "/" + velCaida);
         fire.setLowLife(tiempo);
         fire.setHighLife(tiempo);
-        fire.getParticleInfluencer().setVelocityVariation(0.3f);
+//        fire.getParticleInfluencer().setVelocityVariation(0.3f);
         fire.setRandomAngle(false);
 //        fire.killAllParticles();
 //        fire.emitAllParticles();

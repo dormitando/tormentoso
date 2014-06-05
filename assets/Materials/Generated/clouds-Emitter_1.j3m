@@ -1,5 +1,6 @@
-Material MyMaterial : Common/MatDefs/Post/LightScattering.j3md {
+Material MyMaterial : Common/MatDefs/Misc/Unshaded.j3md {
     MaterialParameters {
+        ColorMap : Textures/clouds/nubes2white_1.png
     }
     AdditionalRenderState {
       FaceCull Back
@@ -10,6 +11,6 @@ Material MyMaterial : Common/MatDefs/Post/LightScattering.j3md {
       Blend Off
       PointSprite Off
       ColorWrite On
-      DepthTest Off
+      DepthTest On
     }
 }

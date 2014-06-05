@@ -1,9 +1,8 @@
 Material MyMaterial : Common/MatDefs/Misc/Particle.j3md {
     MaterialParameters {
-        Texture : Textures/clouds/nubes2white.png
-        DepthTexture : Textures/clouds/nubes2.png
         Softness : 0.0
         GlowColor : 1.0 1.0 1.0 1.0
+        Texture : Textures/clouds/nubes2white.png
     }
     AdditionalRenderState {
       FaceCull Back

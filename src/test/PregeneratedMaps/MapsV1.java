@@ -27,6 +27,11 @@ public class MapsV1 {
         aItems.get(aItems.size() - 1).setType_item(Dictionary.BASIC_ELEVATION);
 
         aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("isla");
+        aItems.get(aItems.size() - 1).setPos(2f, 0f, -20f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.BASIC_ELEVATION);
+
+        aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("cubo1");
         aItems.get(aItems.size() - 1).setPos(2f, 0f, -20f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
@@ -191,6 +196,49 @@ public class MapsV1 {
         return mapa1;
     }
 
+    public TMap genBaleares() {
+        TMap mapa1 = new TMap();
+        mapa1.setName("Baleares");
+        ArrayList<TItem> aItems = new ArrayList<TItem>();
+
+        aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("baleares");
+        aItems.get(aItems.size() - 1).setPos(0f, 0f, 0f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.MAPA_BALEARES);
+
+        aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("nube1");
+        aItems.get(aItems.size() - 1).setPos(-70f, 10f, 0f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_BOLT);
+        mapa1.setItem(aItems);
+
+        aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("nube3");
+        aItems.get(aItems.size() - 1).setPos(-30f, 10f, -40f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_RAIN);
+        mapa1.setItem(aItems);
+
+        aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("sun");
+        aItems.get(aItems.size() - 1).setPos(-30f, 12f, -40f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN);
+        mapa1.setItem(aItems);
+
+       aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("sun");
+        aItems.get(aItems.size() - 1).setPos(30f, 12f, -50f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN);
+        mapa1.setItem(aItems);
+
+       aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("nube4");
+        aItems.get(aItems.size() - 1).setPos(20f, 12f, 40f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
+        mapa1.setItem(aItems);
+
+        return mapa1;
+    }
+
     public TMap genVolcano() {
         TMap mapa1 = new TMap();
         mapa1.setName("m3");
@@ -224,6 +272,7 @@ public class MapsV1 {
     public TScene genScene1() {
         TScene scene = new TScene();
         scene.setName("Test1");
+        scene.addTMap(genBaleares());
         scene.addTMap(genMapNubes());
         scene.addTMap(genMap3());
         scene.addTMap(genOcean());

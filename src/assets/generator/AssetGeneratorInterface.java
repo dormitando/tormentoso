@@ -78,6 +78,7 @@ public interface AssetGeneratorInterface {
     public Node makeBaseElevation(AssetManager assetMaster);
 
     public Node makeIslaCalavera(AssetManager assetMaster);
+public Node makeIslaBaleares(AssetManager assetMaster);
 
     public ArrayList<Node> generateScene(AssetManager assetManager,
             TScene scene,
