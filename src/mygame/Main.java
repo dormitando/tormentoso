@@ -20,6 +20,8 @@ import com.jme3.math.Plane;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.FogFilter;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -39,11 +41,12 @@ public class Main extends SimpleApplication {
     private TScene scene = new TScene();
     private Integer mapsIndex = new Integer(-1);
     private Node rotating_scene = new Node("rotating_scene");
-    
     private Node reflexing_water = new Node("reflexing water");
     private BitmapText hudText;
     private AnimChannel channel;
     private AnimControl control;
+    private FilterPostProcessor fpp;
+    private FogFilter fog;
 
     public static void main(String[] args) {
 
@@ -95,13 +98,16 @@ public class Main extends SimpleApplication {
     private void initKeys() {
         //deshabilitar movimiento de camara
 //        flyCam.setEnabled(false);
+        cam.setLocation(new Vector3f(3.121f, 78.341f, 16.758f));
+        cam.setRotation(new Quaternion(-0.0356f, 0.8491f, -0.5244f, -0.05438f));
         flyCam.setMoveSpeed(flyCam.getMoveSpeed() * 10);
-
+        setDisplayStatView(false);
         inputManager.addMapping(Dictionary.MAP_NEXT, new KeyTrigger(KeyInput.KEY_ADD));
         inputManager.addMapping(Dictionary.MAP_PREVIUS, new KeyTrigger(KeyInput.KEY_MINUS));
+        inputManager.addMapping("cam_info", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addListener(actionListener,
                 new String[]{Dictionary.MAP_PREVIUS,
-            Dictionary.MAP_NEXT});
+            Dictionary.MAP_NEXT, "cam_info"});
 //        System.out.println("keys iniciadas");
     }
     private ActionListener actionListener = new ActionListener() {
@@ -131,7 +137,11 @@ public class Main extends SimpleApplication {
                     node.attachChild(maps.get(mapsIndex));
                 }
             }
-            hudText.setText(maps.get(mapsIndex).getName());
+            System.out.println("onAction " + name);
+            if (name.equals("cam_info") && keyPressed) {
+                hudText.setText(cam.getRotation().toString());
+            }
+//            hudText.setText(maps.get(mapsIndex).getName());
 
         }
     };
@@ -142,7 +152,7 @@ public class Main extends SimpleApplication {
 
         MapsV1 testMap = new MapsV1();
 
-        rootNode.attachChild(agen.makeReference(assetManager));
+//        rootNode.attachChild(agen.makeReference(assetManager));
         this.scene = testMap.genScene1();
         for (TMap scenemaps : this.scene.getMaps()) {
             maps.add(agen.makeMap(assetManager, scenemaps, hudText));
@@ -181,10 +191,21 @@ public class Main extends SimpleApplication {
         AssetGeneratorInterface agen = new AssetGeneratorImplements() {
         };
         reflexing_water.attachChild(agen.makeSky(assetManager, "reflex_sky"));
+
+        fpp = new FilterPostProcessor(assetManager);
+        fog = new FogFilter();
+        fog.setFogColor(new ColorRGBA(0.9f, 0.9f, 0.9f, 0.8f));
+        fog.setFogDistance(800);
+        
+        fog.setFogDensity(1.5f);
+        fpp.addFilter(fog);
+        viewPort.addProcessor(fpp);
+        // Excluding sky bucket
+//        fog.setExcludeSky(true);
     }
 
     private void setUpHUD() {
-        hudText  = new BitmapText(guiFont, false);
+        hudText = new BitmapText(guiFont, false);
         hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
         hudText.setColor(ColorRGBA.Blue);                             // font color
         hudText.setText("Holita vecino");             // the text

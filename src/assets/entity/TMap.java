@@ -14,6 +14,7 @@ public class TMap {
     private String name;
     private int position = 0;
     ArrayList <TItem> item;
+    private TCamera[] cam; //posiciones y orientaciones de la camara
     
     void TMap(){
     }
@@ -48,6 +49,22 @@ public class TMap {
 
     public void setItem(ArrayList<TItem> item) {
         this.item = item;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public TCamera[] getCam() {
+        return cam;
+    }
+
+    public void setCam(TCamera[] cam) {
+        this.cam = cam;
     }
 
     

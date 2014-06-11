@@ -207,8 +207,8 @@ public class MapsV1 {
         aItems.get(aItems.size() - 1).setType_item(Dictionary.MAPA_BALEARES);
 
         aItems.add(new TItem());
-        aItems.get(aItems.size() - 1).setName("nube1");
-        aItems.get(aItems.size() - 1).setPos(-70f, 10f, 0f);
+        aItems.get(aItems.size() - 1).setName("bolt ibiza");
+        aItems.get(aItems.size() - 1).setPos(-40f, 10f, -10f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_BOLT);
         mapa1.setItem(aItems);
 
@@ -219,18 +219,30 @@ public class MapsV1 {
         mapa1.setItem(aItems);
 
         aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("nube3");
+        aItems.get(aItems.size() - 1).setPos(0f, 10f, -40f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_RAIN);
+        mapa1.setItem(aItems);
+
+        aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("sun");
         aItems.get(aItems.size() - 1).setPos(-30f, 12f, -40f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN);
         mapa1.setItem(aItems);
+        
+        aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("sun");
+        aItems.get(aItems.size() - 1).setPos(10f, 12f, -20f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN);
+        mapa1.setItem(aItems);
 
-       aItems.add(new TItem());
+        aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("sun");
         aItems.get(aItems.size() - 1).setPos(30f, 12f, -50f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN);
         mapa1.setItem(aItems);
 
-       aItems.add(new TItem());
+        aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("nube4");
         aItems.get(aItems.size() - 1).setPos(20f, 12f, 40f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);

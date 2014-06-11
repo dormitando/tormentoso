@@ -60,6 +60,8 @@ public class BasicGeometry extends Geometry {
          */
         mat_terrain.setTexture("Alpha", assetManager.loadTexture(
                 "Textures/islands/balearesAlpha.png"));
+        mat_terrain.setTexture("NormalMap", assetManager.loadTexture(
+                "Textures/islands/balearesNormal.jpg"));
 
         /**
          * 1.2) Add GRASS texture into the red layer (Tex1).
