@@ -95,6 +95,22 @@ public class Main extends SimpleApplication {
         selftest();
     }
 
+     /* This is the update loop */
+    @Override
+    public void simpleUpdate(float tpf) {
+        Vector3f v = cam.getLocation();
+//        time +=tpf;
+//        // make the player rotate
+//        player.elementAt(0).rotate(0, 2*tpf, 0); 
+//        player.elementAt(1).rotate(0, 0, 2*2*tpf); 
+//        float oscilation = new Double(Math.sin(
+//                    (new Float(time)).doubleValue())).floatValue();
+//        float move = 3.0f;
+//        player.elementAt(1).setLocalTranslation(oscilation*move, 2.0f, 0);
+//        helloText.setText((new Float(player.elementAt(1).getWorldTranslation().x)).toString());
+//        System.out.println(oscilation*move);
+//        System.out.flush();
+    }
     private void initKeys() {
         //deshabilitar movimiento de camara
 //        flyCam.setEnabled(false);
@@ -192,14 +208,14 @@ public class Main extends SimpleApplication {
         };
         reflexing_water.attachChild(agen.makeSky(assetManager, "reflex_sky"));
 
-        fpp = new FilterPostProcessor(assetManager);
-        fog = new FogFilter();
-        fog.setFogColor(new ColorRGBA(0.9f, 0.9f, 0.9f, 0.8f));
-        fog.setFogDistance(800);
-        
-        fog.setFogDensity(1.5f);
-        fpp.addFilter(fog);
-        viewPort.addProcessor(fpp);
+//        fpp = new FilterPostProcessor(assetManager);
+//        fog = new FogFilter();
+//        fog.setFogColor(new ColorRGBA(0.9f, 0.9f, 0.9f, 0.8f));
+//        fog.setFogDistance(800);
+//        
+//        fog.setFogDensity(1.5f);
+//        fpp.addFilter(fog);
+//        viewPort.addProcessor(fpp);
         // Excluding sky bucket
 //        fog.setExcludeSky(true);
     }

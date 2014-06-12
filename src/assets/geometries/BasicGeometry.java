@@ -52,47 +52,100 @@ public class BasicGeometry extends Geometry {
         /**
          * 1. Create terrain material and load four textures into it.
          */
-        mat_terrain = new Material(assetManager,
-                "Common/MatDefs/Terrain/Terrain.j3md");
+//        mat_terrain = new Material(assetManager,
+//                "Common/MatDefs/Terrain/TerrainLighting.j3md");
+//        Material sphereMat = new Material(assetManager,
+//                "Common/MatDefs/Light/Lighting.j3md");
 
         /**
          * 1.1) Add ALPHA map (for red-blue-green coded splat textures)
          */
-        mat_terrain.setTexture("Alpha", assetManager.loadTexture(
-                "Textures/islands/balearesAlpha.png"));
-        mat_terrain.setTexture("NormalMap", assetManager.loadTexture(
-                "Textures/islands/balearesNormal.jpg"));
+//        mat_terrain.
+//        mat_terrain.setTexture("AlphaMap", assetManager.loadTexture(
+//                "Textures/islands/balearesAlpha.png"));
+//        mat_terrain.setTexture("NormalMap", assetManager.loadTexture(
+//                "Textures/islands/balearesNormal.jpg"));
 
-        /**
-         * 1.2) Add GRASS texture into the red layer (Tex1).
-         */
-        Texture grass = assetManager.loadTexture(
-                texture);
-//        grass.setWrap(WrapMode.);
-        mat_terrain.setTexture("Tex1", grass);
-        mat_terrain.setFloat("Tex1Scale", 1f);
+        Material terrain_mat = new Material(assetManager,
+                "Common/MatDefs/Terrain/TerrainLighting.j3md");
+//        terrain_mat.setBoolean("useTriPlanarMapping", false);
+//        terrain_mat.setBoolean("WardIso", true);
+//        terrain_mat.setTexture("AlphaMap", assetManager.loadTexture(
+//                "Textures/islands/balearesAlpha2.png"));
 
-        /**
-         * 1.3) Add DIRT texture into the green layer (Tex2)
-         */
-//        Texture dirt = assetManager.loadTexture(
-//                "Textures/Terrain/splat/dirt.jpg");
-//        dirt.setWrap(WrapMode.Repeat);
-//        mat_terrain.setTexture("Tex2", dirt);
-//        mat_terrain.setFloat("Tex2Scale", 32f);
-//
-//        /**
-//         * 1.4) Add ROAD texture into the blue layer (Tex3)
-//         */
-//        Texture rock = assetManager.loadTexture(
-//                "Textures/Terrain/splat/road.jpg");
-//        rock.setWrap(WrapMode.Repeat);
-//        mat_terrain.setTexture("Tex3", rock);
-//        mat_terrain.setFloat("Tex3Scale", 128f);
+//        Texture grass = assetManager.loadTexture(
+//                texture);
+//        grass.setWrap(WrapMode.Repeat);
+//        terrain_mat.setTexture("DiffuseMap", grass);
+//        terrain_mat.setFloat("DiffuseMap_0_scale", 1);
+//        Texture normalMap0 = assetManager.loadTexture(
+//                "Textures/islands/balearesNormal.jpg");
+//        normalMap0.setWrap(WrapMode.Repeat);
+//        terrain_mat.setTexture("NormalMap", normalMap0);
 
-        /**
-         * 2. Create the height map
-         */
+        
+//        terrain_mat = new Material(assetManager, 
+//            "Common/MatDefs/Terrain/TerrainLighting.j3md");
+        
+    terrain_mat.setBoolean("useTriPlanarMapping", false);
+    terrain_mat.setBoolean("WardIso", true);    
+    terrain_mat.setTexture("AlphaMap", assetManager.loadTexture(
+            "Textures/islands/balearesAlpha2.png"));
+    
+    Texture grass = assetManager.loadTexture(
+            "Textures/Terrain/SeaWater/12_DIFFUSE.jpg");
+    grass.setWrap(WrapMode.Repeat);
+    terrain_mat.setTexture("DiffuseMap", grass);
+    terrain_mat.setFloat("DiffuseMap_0_scale", 16);
+    Texture normalMap0 = assetManager.loadTexture(
+             "Textures/Terrain/SeaWater/12_NORMAL.jpg");
+    normalMap0.setWrap(WrapMode.Repeat);
+    terrain_mat.setTexture("NormalMap", normalMap0);
+    
+    Texture rock = assetManager.loadTexture(
+            "Textures/Terrain/SeaWater/05_DIFFUSE.jpg");
+    rock.setWrap(WrapMode.Repeat);
+    terrain_mat.setTexture("DiffuseMap_1", rock);
+    terrain_mat.setFloat("DiffuseMap_1_scale", 16);
+    Texture normalMap1 = assetManager.loadTexture(
+            "Textures/Terrain/SeaWater/05_NORMAL.jpg");
+    normalMap1.setWrap(WrapMode.Repeat);
+    terrain_mat.setTexture("NormalMap_1", normalMap1);
+    
+    Texture road = assetManager.loadTexture(
+            "Textures/Terrain/Grass/06_DIFFUSE.jpg");
+    road.setWrap(WrapMode.Repeat);
+    terrain_mat.setTexture("DiffuseMap_2", road);
+    terrain_mat.setFloat("DiffuseMap_2_scale", 32);
+    Texture normalMap2 = assetManager.loadTexture(
+             "Textures/Terrain/Grass/06_NORMAL.jpg");
+    normalMap2.setWrap(WrapMode.Repeat);
+    terrain_mat.setTexture("NormalMap_2", normalMap2);
+        
+    //texturas de las islas
+//      terrain_mat.setTexture("AlphaMap", assetManager.loadTexture(
+//            "Textures/islands/balearesAlpha2b.png"));
+//      
+//       Texture grass2 = assetManager.loadTexture(
+//            "Textures/Terrain/Pavers/14_DIFFUSE.jpg");
+//    grass2.setWrap(WrapMode.Repeat);
+//    terrain_mat.setTexture("DiffuseMap_3", grass2);
+//    terrain_mat.setFloat("DiffuseMap_3_scale", 16);
+//    Texture normalMap02 = assetManager.loadTexture(
+//             "Textures/Terrain/Pavers/14_NORMAL.jpg");
+//    normalMap02.setWrap(WrapMode.Repeat);
+//    terrain_mat.setTexture("NormalMap_3", normalMap02);
+//    
+//    Texture rock2 = assetManager.loadTexture(
+//            "Textures/Terrain/SeaWater/05_DIFFUSE.jpg");
+//    rock2.setWrap(WrapMode.Repeat);
+//    terrain_mat.setTexture("DiffuseMap_4", rock2);
+//    terrain_mat.setFloat("DiffuseMap_4_scale", 16);
+//    Texture normalMap12 = assetManager.loadTexture(
+//            "Textures/Terrain/SeaWater/05_NORMAL.jpg");
+//    normalMap12.setWrap(WrapMode.Repeat);
+//    terrain_mat.setTexture("NormalMap_4", normalMap12);
+    
         AbstractHeightMap heightmap = null;
         Texture heightMapImage = assetManager.loadTexture(
                 elevation);
@@ -114,7 +167,7 @@ public class BasicGeometry extends Geometry {
          * 4. We give the terrain its material, position & scale it, and attach
          * it.
          */
-        terrain.setMaterial(mat_terrain);
+        terrain.setMaterial(terrain_mat);
         terrain.setLocalTranslation(0, -10, 0);
         terrain.setLocalScale(0.5f, 0.2f, 0.5f);
         node.attachChild(terrain);
@@ -222,8 +275,8 @@ public class BasicGeometry extends Geometry {
 
     public Node makeLightingBolt(AssetManager assetManager, String name, ColorRGBA color,
             float px, float py, float pz, float length) {
-         Node node = new Node(name);
-        node.setLocalTranslation(px, py-length, pz);
+        Node node = new Node(name);
+        node.setLocalTranslation(px, py - length, pz);
         float velCaida = 10f;
         ParticleEmitter fire =
                 new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 2);
@@ -233,8 +286,8 @@ public class BasicGeometry extends Geometry {
                 "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture(
                 "Textures/bolt/rayo3_2.png"));
-        fire.setShape(new EmitterBoxShape(new Vector3f(-1f, py-length/2, -1f),
-                new Vector3f(1f,  py-length/2, 1f)));
+        fire.setShape(new EmitterBoxShape(new Vector3f(-1f, py - length / 2, -1f),
+                new Vector3f(1f, py - length / 2, 1f)));
         fire.setMaterial(mat_red);
         fire.setImagesX(3);
         fire.setImagesY(3); // 2x2 texture animation

@@ -5,9 +5,11 @@
 package test.PregeneratedMaps;
 
 import assets.entity.Dictionary;
+import assets.entity.TCamera;
 import assets.entity.TItem;
 import assets.entity.TMap;
 import assets.entity.TScene;
+import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 
 /**
@@ -248,6 +250,12 @@ public class MapsV1 {
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
         mapa1.setItem(aItems);
 
+        TCamera[] camares = {new TCamera(new Vector3f(3.121f, 78.341f, 16.758f)),
+                             new TCamera(new Vector3f(-29.549942f, 21.233969f, 19.374535f)),
+                             new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f)),
+                             new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f)),
+                             };
+        mapa1.setCam(camares);
         return mapa1;
     }
 

@@ -4,6 +4,7 @@
  */
 package assets.entity;
 
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 
 /**
@@ -12,8 +13,17 @@ import com.jme3.math.Vector3f;
  */
 public class TCamera {
     private Vector3f position;
-    private Vector3f orientation;
+    private Quaternion orientation;
 
+    public TCamera(Vector3f position, Quaternion orientation) {
+        this.position = position;
+        this.orientation = orientation;
+    }
+    public TCamera(Vector3f position) {
+        this.position = position;
+    }
+
+    
     public Vector3f getPosition() {
         return position;
     }
@@ -22,11 +32,11 @@ public class TCamera {
         this.position = position;
     }
 
-    public Vector3f getOrientation() {
+    public Quaternion getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(Vector3f orientation) {
+    public void setOrientation(Quaternion orientation) {
         this.orientation = orientation;
     }
     
