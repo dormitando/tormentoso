@@ -1,6 +1,7 @@
 package mygame;
 
 import assets.entity.Dictionary;
+import assets.entity.TCamera;
 import assets.entity.TMap;
 import assets.entity.TScene;
 import assets.generator.AssetGeneratorImplements;
@@ -47,6 +48,10 @@ public class Main extends SimpleApplication {
     private AnimControl control;
     private FilterPostProcessor fpp;
     private FogFilter fog;
+    private TCamera[] cams = {null, null};
+    private TCamera camActual = null;
+    private float speed = 1f;
+    private Integer camOrder = 0;
 
     public static void main(String[] args) {
 
@@ -95,7 +100,7 @@ public class Main extends SimpleApplication {
         selftest();
     }
 
-     /* This is the update loop */
+    /* This is the update loop */
     @Override
     public void simpleUpdate(float tpf) {
         Vector3f v = cam.getLocation();
@@ -111,6 +116,7 @@ public class Main extends SimpleApplication {
 //        System.out.println(oscilation*move);
 //        System.out.flush();
     }
+
     private void initKeys() {
         //deshabilitar movimiento de camara
 //        flyCam.setEnabled(false);
@@ -140,6 +146,12 @@ public class Main extends SimpleApplication {
                     mapsIndex = (mapsIndex + 1) % maps.size();
 //                    System.out.println("mapsIndex " + mapsIndex);
                     node.attachChild(maps.get(mapsIndex));
+
+                    TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                    if (camsLocal != null && camsLocal.length > 0) {
+                        cam.setLocation(camsLocal[0].getPosition());
+                    }
+                    camOrder = 0;
                 }
             }
             if (name.equals(Dictionary.MAP_PREVIUS) && keyPressed) {
@@ -151,10 +163,30 @@ public class Main extends SimpleApplication {
                     mapsIndex = (mapsIndex - 1) % maps.size();
 //                    System.out.println("mapsIndex " + mapsIndex);
                     node.attachChild(maps.get(mapsIndex));
+                    TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                    if (camsLocal != null && camsLocal.length > 0) {
+                        cam.setLocation(camsLocal[0].getPosition());
+                    }
+                    camOrder = 0;
                 }
             }
             System.out.println("onAction " + name);
             if (name.equals("cam_info") && keyPressed) {
+                TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                if (camsLocal != null && camsLocal.length > 0) {
+                    switch (camsLocal.length) {
+                        case 1:
+                            cam.setLocation(camsLocal[0].getPosition());
+                            break;
+                        default:
+                            if (camActual == null) {
+                                camActual = new TCamera(cam.getLocation());
+                            }
+                            camOrder = (camOrder + 1) % camsLocal.length;
+                            cams[0] = new TCamera(camActual.getPosition());
+                            cams[1] = scene.getMaps().get(mapsIndex).getCam()[camOrder];
+                    }
+                }
                 hudText.setText(cam.getRotation().toString());
             }
 //            hudText.setText(maps.get(mapsIndex).getName());
