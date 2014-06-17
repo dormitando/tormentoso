@@ -29,6 +29,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.water.SimpleWaterProcessor;
 import java.util.ArrayList;
+import org.bushe.swing.event.Logger;
 import test.PregeneratedMaps.MapsV1;
 
 /**
@@ -48,10 +49,12 @@ public class Main extends SimpleApplication {
     private AnimControl control;
     private FilterPostProcessor fpp;
     private FogFilter fog;
+    private Logger log = Logger.getLogger(this.getClass().toString());
     private TCamera[] cams = {null, null};
     private TCamera camActual = null;
-    private float speed = 1f;
+    private float camSpeed = 10f;
     private Integer camOrder = 0;
+    private boolean camMove = false;
 
     public static void main(String[] args) {
 
@@ -103,7 +106,25 @@ public class Main extends SimpleApplication {
     /* This is the update loop */
     @Override
     public void simpleUpdate(float tpf) {
-        Vector3f v = cam.getLocation();
+        Vector3f v = null;
+        if (camMove) {
+            if (cams[0] != null && cams[1] != null) {
+                float distInicial = camActual.getPosition().distance(cams[1].getPosition());
+                v = cams[1].getPosition().subtract(cams[0].getPosition());
+                v = v.normalize();
+                v = v.mult(tpf * camSpeed);
+                camActual.setPosition(camActual.getPosition().add(v));
+                float distFinal = camActual.getPosition().distance(cams[1].getPosition());
+                if (distFinal > distInicial) {
+                    log.debug("que nos pasamos");
+                    camActual.setPosition(cams[1].getPosition());
+
+                } else {
+                    log.debug("nos movemos");
+                }
+                cam.setLocation(camActual.getPosition());
+            }
+        }
 //        time +=tpf;
 //        // make the player rotate
 //        player.elementAt(0).rotate(0, 2*tpf, 0); 
@@ -185,6 +206,7 @@ public class Main extends SimpleApplication {
                             camOrder = (camOrder + 1) % camsLocal.length;
                             cams[0] = new TCamera(camActual.getPosition());
                             cams[1] = scene.getMaps().get(mapsIndex).getCam()[camOrder];
+                            camMove = true;
                     }
                 }
                 hudText.setText(cam.getRotation().toString());
