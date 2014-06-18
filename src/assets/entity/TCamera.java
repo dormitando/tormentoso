@@ -14,6 +14,7 @@ import com.jme3.math.Vector3f;
 public class TCamera {
     private Vector3f position;
     private Quaternion orientation;
+    private Vector3f lookAt;
 
     public TCamera(Vector3f position, Quaternion orientation) {
         this.position = position;
@@ -38,6 +39,14 @@ public class TCamera {
 
     public void setOrientation(Quaternion orientation) {
         this.orientation = orientation;
+    }
+
+    public Vector3f getLookAt() {
+        return lookAt;
+    }
+
+    public void setLookAt(Vector3f lookAt) {
+        this.lookAt = lookAt;
     }
     
     

@@ -29,7 +29,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.water.SimpleWaterProcessor;
 import java.util.ArrayList;
-import org.bushe.swing.event.Logger;
+import java.util.logging.Logger;
 import test.PregeneratedMaps.MapsV1;
 
 /**
@@ -50,6 +50,7 @@ public class Main extends SimpleApplication {
     private FilterPostProcessor fpp;
     private FogFilter fog;
     private Logger log = Logger.getLogger(this.getClass().toString());
+    
     private TCamera[] cams = {null, null};
     private TCamera camActual = null;
     private float camSpeed = 10f;
@@ -109,22 +110,47 @@ public class Main extends SimpleApplication {
         Vector3f v = null;
         if (camMove) {
             if (cams[0] != null && cams[1] != null) {
-                float distInicial = camActual.getPosition().distance(cams[1].getPosition());
-                v = cams[1].getPosition().subtract(cams[0].getPosition());
-                v = v.normalize();
-                v = v.mult(tpf * camSpeed);
-                camActual.setPosition(camActual.getPosition().add(v));
-                float distFinal = camActual.getPosition().distance(cams[1].getPosition());
-                if (distFinal > distInicial) {
-                    log.debug("que nos pasamos");
-                    camActual.setPosition(cams[1].getPosition());
+                Vector3f posActual = camActual.getPosition();
+                Vector3f posFinal = cams[1].getPosition();
+                float distInicial = camActual.getPosition().distance(posFinal);
+                float lookInicial = camActual.getLookAt().distance(cams[1].getLookAt());
+//                log.info("camActual " + camActual.getPosition());
+                camActual.setPosition(animaVector(tpf,
+                        cams[0].getPosition(),
+                        cams[1].getPosition(),
+                        camActual.getPosition(),
+                        camSpeed));
+//                log.info("camActual modificado" + camActual.getPosition());
+                camActual.setLookAt(animaVector(tpf,
+                        cams[0].getLookAt(),
+                        cams[1].getLookAt(),
+                        camActual.getLookAt(),
+                        camSpeed * 2));
+                float distFinal = camActual.getPosition().distance(posFinal);
+                float lookfinal = camActual.getLookAt().distance(cams[1].getLookAt());
 
-                } else {
-                    log.debug("nos movemos");
+//                log.info("dist antes" + distInicial + " dist despues " + distFinal);
+                if (distFinal > distInicial) {
+                    camMove = false;
+                    camActual = cams[1];
                 }
+                  log.info("lookfinal /" + lookfinal + "/ > lookInicial /" + lookInicial+"/?");
+                if (lookfinal > lookInicial) {
+                    camActual.setLookAt(cams[1].getLookAt());
+                }
+                log.info("moviendo");
+                if (camActual.getPosition().equals(cams[1].getPosition())) {
+//                    hemos llegado a destino
+                    camMove = false;
+//                    camActual.setLookAt(cams[1].getPosition());
+                }
+
                 cam.setLocation(camActual.getPosition());
+                
+                cam.lookAt(camActual.getLookAt(),new Vector3f(0,1,0));
             }
         }
+        
 //        time +=tpf;
 //        // make the player rotate
 //        player.elementAt(0).rotate(0, 2*tpf, 0); 
@@ -138,11 +164,28 @@ public class Main extends SimpleApplication {
 //        System.out.flush();
     }
 
+    private Vector3f animaVector(float tpf, 
+            Vector3f posInicial, 
+            Vector3f posFinal, 
+            Vector3f posActual, 
+            float speedMovement) {
+        Vector3f v;
+        
+        v = posFinal.subtract(posInicial);
+        v = v.normalize();
+        v = v.mult(tpf * speedMovement);
+        posActual = posActual.add(v)
+                ;
+       
+       
+        return posActual;
+    }
     private void initKeys() {
         //deshabilitar movimiento de camara
 //        flyCam.setEnabled(false);
         cam.setLocation(new Vector3f(3.121f, 78.341f, 16.758f));
         cam.setRotation(new Quaternion(-0.0356f, 0.8491f, -0.5244f, -0.05438f));
+//        cam.
         flyCam.setMoveSpeed(flyCam.getMoveSpeed() * 10);
         setDisplayStatView(false);
         inputManager.addMapping(Dictionary.MAP_NEXT, new KeyTrigger(KeyInput.KEY_ADD));
@@ -202,10 +245,14 @@ public class Main extends SimpleApplication {
                         default:
                             if (camActual == null) {
                                 camActual = new TCamera(cam.getLocation());
+                                camActual.setLookAt(cam.getLocation().add(cam.getDirection()));
                             }
                             camOrder = (camOrder + 1) % camsLocal.length;
                             cams[0] = new TCamera(camActual.getPosition());
+                            cams[0].setLookAt(camActual.getLookAt());
                             cams[1] = scene.getMaps().get(mapsIndex).getCam()[camOrder];
+                            cams[1].setLookAt(scene.getMaps().get(mapsIndex).getCam()[camOrder].getLookAt());
+                            
                             camMove = true;
                     }
                 }
