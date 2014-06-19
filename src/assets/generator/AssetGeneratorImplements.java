@@ -258,7 +258,7 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     @Override
     public Spatial makeAgumon(AssetManager assetManager, String name, float x, float y, float z) {
         BasicGeometry geom = new BasicGeometry();
-        return geom.makeAsset(assetManager, "Models/agumon_skin/agumon_skin.j3o",
+        return geom.makeAsset(assetManager, "Models/cabecera/cabecera.j3o",
                 x, y, z, //position
                 1, 1, 1, //scale
                 0, 0, 0);//rotate
@@ -286,7 +286,7 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
 //        Material defaultMat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
 //        teapot.setMaterial(defaultMat);
 //        return teapot;
-        return geom.makeAsset(assetManager, "Models/volcano/volcano.j3o",
+        return geom.makeAsset(assetManager, "Models/test/sketchup/test.j3o",
                 x, y, z, //position
                 1, 1, 1, //scale
                 0, 0, 0);//rotate

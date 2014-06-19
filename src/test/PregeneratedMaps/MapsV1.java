@@ -221,8 +221,8 @@ public class MapsV1 {
         mapa1.setItem(aItems);
 
         aItems.add(new TItem());
-        aItems.get(aItems.size() - 1).setName("nube3");
-        aItems.get(aItems.size() - 1).setPos(0f, 10f, -40f);
+        aItems.get(aItems.size() - 1).setName("nube solitaria");
+        aItems.get(aItems.size() - 1).setPos(-10f, 10f, -40f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD_RAIN);
         mapa1.setItem(aItems);
 
@@ -255,10 +255,10 @@ public class MapsV1 {
                              new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f)),
                              new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f)),
                              };
-        camaras[0].setLookAt(new Vector3f(0f,0f,0f));
-        camaras[1].setLookAt(new Vector3f(-40f, 10f, -10f));
-        camaras[2].setLookAt(new Vector3f(-30f, 12f, -40f));
-        camaras[3].setLookAt(new Vector3f(30f, 12f, -50f));
+        camaras[0].setLookAt(new Vector3f(-10f, 0, -40f));
+        camaras[1].setLookAt(new Vector3f(-40f, 0, -10f));
+        camaras[2].setLookAt(new Vector3f(0f, 0, -40f));
+        camaras[3].setLookAt(new Vector3f(35f, 0, -60f));
         mapa1.setCam(camaras);
         return mapa1;
     }
@@ -298,12 +298,12 @@ public class MapsV1 {
         scene.setName("Test1");
         scene.addTMap(genBaleares());
         scene.addTMap(genMapNubes());
-        scene.addTMap(genMap3());
-        scene.addTMap(genOcean());
-        scene.addTMap(genMap1());
+//        scene.addTMap(genMap3());
+//        scene.addTMap(genOcean());
+//        scene.addTMap(genMap1());
         scene.addTMap(genVolcano());
         scene.addTMap(genAgumon());
-        scene.addTMap(genMap2());
+//        scene.addTMap(genMap2());
         return scene;
     }
 }
