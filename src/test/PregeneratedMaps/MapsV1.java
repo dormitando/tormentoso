@@ -9,6 +9,7 @@ import assets.entity.TCamera;
 import assets.entity.TItem;
 import assets.entity.TMap;
 import assets.entity.TScene;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 
@@ -323,9 +324,21 @@ public class MapsV1 {
         for (int i = 0; i < 10; i++) {
             aItems.add(new TItem());
             aItems.get(aItems.size() - 1).setName("pedestal_"+i);
-            aItems.get(aItems.size() - 1).setPos(i*2f, 0f, 0f);
+            aItems.get(aItems.size() - 1).setPos(i*3f, 0f, 0f);
             aItems.get(aItems.size() - 1).setType_item(Dictionary.EL_PEDESTAL);
 
+            TCamera[] camaras = {new TCamera(new Vector3f(3.121f, 78.341f, 16.758f)),
+            new TCamera(new Vector3f( 9.618516f, 7.1798444f, 29.095222f))
+//                    ,
+//            new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f)),
+//            new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f)),
+            };
+        camaras[0].setLookAt(new Vector3f(-0f, 0, -20f));
+        camaras[0].setOrientation(new Quaternion(3.5894738E-4f, 0.99699795f, -0.071879365f, 0.028780898f));
+//        camaras[1].setLookAt(new Vector3f(-40f, 0, -10f));
+//        camaras[2].setLookAt(new Vector3f(0f, 0, -40f));
+//        camaras[3].setLookAt(new Vector3f(35f, 0, -60f));
+//            9.618516            , 7.1798444, 29.095222
             mapa1.setItem(aItems);
         }
 

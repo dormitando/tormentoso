@@ -273,11 +273,11 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     public Node makeElPedestal(AssetManager assetManager, String name, float x, float y, float z) {
         Node node = new Node("pedestal_"+name);
         BasicGeometry geom = new BasicGeometry();
-        geom.makeAsset(assetManager, "Models/patio/patio.j3o",
+        Spatial pedestal = geom.makeAsset(assetManager, "Models/pedestal/pedestal.j3o",
                 x, y, z, //position
                 1, 1, 1, //scale
                 0, 0, 0);//rotate
-        node.attachChild(geom);
+        node.attachChild(pedestal);
         return node;
     }
 

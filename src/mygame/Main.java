@@ -50,7 +50,6 @@ public class Main extends SimpleApplication {
     private FilterPostProcessor fpp;
     private FogFilter fog;
     private Logger log = Logger.getLogger(this.getClass().toString());
-    
     private TCamera[] cams = {null, null};
     private TCamera camActual = null;
     private float camSpeed = 10f;
@@ -134,7 +133,7 @@ public class Main extends SimpleApplication {
                     camMove = false;
                     camActual = cams[1];
                 }
-                  log.info("lookfinal /" + lookfinal + "/ > lookInicial /" + lookInicial+"/?");
+                log.info("lookfinal /" + lookfinal + "/ > lookInicial /" + lookInicial + "/?");
                 if (lookfinal > lookInicial) {
                     camActual.setLookAt(cams[1].getLookAt());
                 }
@@ -146,11 +145,11 @@ public class Main extends SimpleApplication {
                 }
 
                 cam.setLocation(camActual.getPosition());
-                
-                cam.lookAt(camActual.getLookAt(),new Vector3f(0,1,0));
+
+                cam.lookAt(camActual.getLookAt(), new Vector3f(0, 1, 0));
             }
         }
-        
+
 //        time +=tpf;
 //        // make the player rotate
 //        player.elementAt(0).rotate(0, 2*tpf, 0); 
@@ -164,22 +163,22 @@ public class Main extends SimpleApplication {
 //        System.out.flush();
     }
 
-    private Vector3f animaVector(float tpf, 
-            Vector3f posInicial, 
-            Vector3f posFinal, 
-            Vector3f posActual, 
+    private Vector3f animaVector(float tpf,
+            Vector3f posInicial,
+            Vector3f posFinal,
+            Vector3f posActual,
             float speedMovement) {
         Vector3f v;
-        
+
         v = posFinal.subtract(posInicial);
         v = v.normalize();
         v = v.mult(tpf * speedMovement);
-        posActual = posActual.add(v)
-                ;
-       
-       
+        posActual = posActual.add(v);
+
+
         return posActual;
     }
+
     private void initKeys() {
         //deshabilitar movimiento de camara
 //        flyCam.setEnabled(false);
@@ -188,8 +187,8 @@ public class Main extends SimpleApplication {
 //        cam.
         flyCam.setMoveSpeed(flyCam.getMoveSpeed() * 10);
         setDisplayStatView(false);
-        inputManager.addMapping(Dictionary.MAP_NEXT, new KeyTrigger(KeyInput.KEY_ADD));
-        inputManager.addMapping(Dictionary.MAP_PREVIUS, new KeyTrigger(KeyInput.KEY_MINUS));
+        inputManager.addMapping(Dictionary.MAP_NEXT, new KeyTrigger(KeyInput.KEY_PGUP));
+        inputManager.addMapping(Dictionary.MAP_PREVIUS, new KeyTrigger(KeyInput.KEY_PGDN));
         inputManager.addMapping("cam_info", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addListener(actionListener,
                 new String[]{Dictionary.MAP_PREVIUS,
@@ -202,10 +201,12 @@ public class Main extends SimpleApplication {
             Node node = rotating_scene;
 //            System.out.println("iniciando key " + name + "key" + keyPressed);
             if (name.equals(Dictionary.MAP_NEXT) && keyPressed) {
-                if (mapsIndex < maps.size() - 1) {
+//                if (mapsIndex < maps.size() - 1) {
                     try {
-                        node.detachChildNamed(maps.get(mapsIndex.intValue()).getName());
+//                        node.detachChildNamed(maps.get(mapsIndex.intValue()).getName());
+                        node.detachAllChildren();
                     } catch (Exception e) {
+                        log.severe("error " + e.getMessage());
                     }
                     mapsIndex = (mapsIndex + 1) % maps.size();
 //                    System.out.println("mapsIndex " + mapsIndex);
@@ -214,9 +215,14 @@ public class Main extends SimpleApplication {
                     TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
                     if (camsLocal != null && camsLocal.length > 0) {
                         cam.setLocation(camsLocal[0].getPosition());
+                        if (camsLocal[0].getOrientation() != null) {
+                            cam.setRotation(camsLocal[0].getOrientation());
+                        }if (camsLocal[0].getLookAt()!=null){
+                            cam.lookAt(camsLocal[0].getLookAt(), new Vector3f(0,1f,0));
+                        }
                     }
                     camOrder = 0;
-                }
+//                }
             }
             if (name.equals(Dictionary.MAP_PREVIUS) && keyPressed) {
                 if (mapsIndex > 0) {
@@ -230,6 +236,11 @@ public class Main extends SimpleApplication {
                     TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
                     if (camsLocal != null && camsLocal.length > 0) {
                         cam.setLocation(camsLocal[0].getPosition());
+                        if (camsLocal[0].getOrientation() != null) {
+                            cam.setRotation(camsLocal[0].getOrientation());
+                        }if (camsLocal[0].getLookAt()!=null){
+                            cam.lookAt(cams[0].getLookAt(), new Vector3f(0,1f,0));
+                        }
                     }
                     camOrder = 0;
                 }
@@ -241,6 +252,9 @@ public class Main extends SimpleApplication {
                     switch (camsLocal.length) {
                         case 1:
                             cam.setLocation(camsLocal[0].getPosition());
+                            if (camsLocal[0].getOrientation() != null) {
+                                cam.setRotation(camsLocal[0].getOrientation());
+                            }
                             break;
                         default:
                             if (camActual == null) {
@@ -252,7 +266,7 @@ public class Main extends SimpleApplication {
                             cams[0].setLookAt(camActual.getLookAt());
                             cams[1] = scene.getMaps().get(mapsIndex).getCam()[camOrder];
                             cams[1].setLookAt(scene.getMaps().get(mapsIndex).getCam()[camOrder].getLookAt());
-                            
+
                             camMove = true;
                     }
                 }
@@ -270,10 +284,11 @@ public class Main extends SimpleApplication {
         MapsV1 testMap = new MapsV1();
 
 //        rootNode.attachChild(agen.makeReference(assetManager));
-        this.scene = testMap.genScene1();
+        this.scene = testMap.genScene2();
         for (TMap scenemaps : this.scene.getMaps()) {
             maps.add(agen.makeMap(assetManager, scenemaps, hudText));
         }
+        hudText.setText(this.scene.getName());
     }
 
     private void addWater() {
