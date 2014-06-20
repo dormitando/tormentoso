@@ -162,6 +162,10 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                 case Dictionary.MAPA_BALEARES:
                     n.attachChild(this.makeIslaBaleares(assetManager));
                     break;
+                case Dictionary.EL_PEDESTAL:
+                    n.attachChild(this.makeElPedestal(assetManager, item.getName(),
+                            item.getPx(), item.getPy(), item.getPz()));
+                    break;
             }
             item = mapa.nextItem();
         }
@@ -258,10 +262,23 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     @Override
     public Spatial makeAgumon(AssetManager assetManager, String name, float x, float y, float z) {
         BasicGeometry geom = new BasicGeometry();
-        return geom.makeAsset(assetManager, "Models/cabecera/cabecera.j3o",
+        return geom.makeAsset(assetManager, "Models/patio/patio.j3o",
                 x, y, z, //position
                 1, 1, 1, //scale
                 0, 0, 0);//rotate
+    }
+    
+
+    @Override
+    public Node makeElPedestal(AssetManager assetManager, String name, float x, float y, float z) {
+        Node node = new Node("pedestal_"+name);
+        BasicGeometry geom = new BasicGeometry();
+        geom.makeAsset(assetManager, "Models/patio/patio.j3o",
+                x, y, z, //position
+                1, 1, 1, //scale
+                0, 0, 0);//rotate
+        node.attachChild(geom);
+        return node;
     }
 
     @Override

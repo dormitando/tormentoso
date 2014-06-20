@@ -11,6 +11,7 @@ package assets.entity;
 public class Dictionary {
 
     public static final String SPHERE = "sphere";
+    public static final String EL_PEDESTAL = "pedestal";
     public static final String SUN = "sun";
     public static final String SUN_MODEL = "sun001";
     public static final String FLOOR = "floor";

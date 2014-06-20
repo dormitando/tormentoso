@@ -231,7 +231,7 @@ public class MapsV1 {
         aItems.get(aItems.size() - 1).setPos(-30f, 12f, -40f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.SUN);
         mapa1.setItem(aItems);
-        
+
         aItems.add(new TItem());
         aItems.get(aItems.size() - 1).setName("sun");
         aItems.get(aItems.size() - 1).setPos(10f, 12f, -20f);
@@ -251,10 +251,9 @@ public class MapsV1 {
         mapa1.setItem(aItems);
 
         TCamera[] camaras = {new TCamera(new Vector3f(3.121f, 78.341f, 16.758f)),
-                             new TCamera(new Vector3f(-29.549942f, 21.233969f, 19.374535f)),
-                             new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f)),
-                             new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f)),
-                             };
+            new TCamera(new Vector3f(-29.549942f, 21.233969f, 19.374535f)),
+            new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f)),
+            new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f)),};
         camaras[0].setLookAt(new Vector3f(-10f, 0, -40f));
         camaras[1].setLookAt(new Vector3f(-40f, 0, -10f));
         camaras[2].setLookAt(new Vector3f(0f, 0, -40f));
@@ -305,5 +304,31 @@ public class MapsV1 {
         scene.addTMap(genAgumon());
 //        scene.addTMap(genMap2());
         return scene;
+    }
+
+    public TScene genScene2() {
+        TScene scene = new TScene();
+        scene.setName("Test2");
+        scene.addTMap(genBaleares());
+        scene.addTMap(genMapNubes());
+        scene.addTMap(genPedestales());
+
+        return scene;
+    }
+
+    private TMap genPedestales() {
+        TMap mapa1 = new TMap();
+        mapa1.setName("pedestales");
+        ArrayList<TItem> aItems = new ArrayList<TItem>();
+        for (int i = 0; i < 10; i++) {
+            aItems.add(new TItem());
+            aItems.get(aItems.size() - 1).setName("pedestal_"+i);
+            aItems.get(aItems.size() - 1).setPos(i*2f, 0f, 0f);
+            aItems.get(aItems.size() - 1).setType_item(Dictionary.EL_PEDESTAL);
+
+            mapa1.setItem(aItems);
+        }
+
+        return mapa1;
     }
 }
