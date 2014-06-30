@@ -212,8 +212,8 @@ public class BasicGeometry extends Geometry {
             float rx, float ry, float rz) {
         // Load a model from test_data (OgreXML + material + texture)
         Spatial asset = assetManager.loadModel(fileName);
-        asset.scale(sx, sy, sz);
         asset.setLocalTranslation(px, py, pz);
+        asset.scale(sx, sy, sz);
         asset.rotate(rx, ry, rz);
 
         return asset;

@@ -11,11 +11,14 @@ import assets.entity.TScene;
 import assets.geometries.BasicGeometry;
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapText;
+import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.ArrayList;
+import java.util.logging.Logger;
+import sun.org.mozilla.javascript.internal.ast.SwitchCase;
 
 /**
  *
@@ -166,6 +169,9 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                     n.attachChild(this.makeElPedestal(assetManager, item.getName(),
                             item.getPx(), item.getPy(), item.getPz()));
                     break;
+                case Dictionary.ELEC_SENADO:
+                    n.attachChild(this.makeSenado(assetManager));
+                    break;
             }
             item = mapa.nextItem();
         }
@@ -267,11 +273,10 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
                 1, 1, 1, //scale
                 0, 0, 0);//rotate
     }
-    
 
     @Override
     public Node makeElPedestal(AssetManager assetManager, String name, float x, float y, float z) {
-        Node node = new Node("pedestal_"+name);
+        Node node = new Node("pedestal_" + name);
         BasicGeometry geom = new BasicGeometry();
         Spatial pedestal = geom.makeAsset(assetManager, "Models/pedestal/pedestal.j3o",
                 x, y, z, //position
@@ -346,11 +351,11 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
 //                1, 1, 1, //scale
 //                0, 0, 0);//rotate  
 //        node.attachChild(geom);
-         BasicGeometry miniSun = new BasicGeometry();
-        Node node =  miniSun.makeElevation(assetManager, "isla base",
+        BasicGeometry miniSun = new BasicGeometry();
+        Node node = miniSun.makeElevation(assetManager, "isla base",
                 "Textures/islands/balearesTextura.png",
                 "Textures/islands/balearesElevation.png");
-//                makeSphere(assetManager, name,
+//               makeSphere(assetManager, name,
 //                30, 30, radius, x, y, z, color);
 //        return node;
         node.setLocalScale(0.7f, 0.1f, 0.7f);
@@ -358,5 +363,40 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
         return node;
     }
 
-
+    @Override
+    public Node makeSenado(AssetManager assetManager) {
+        Logger log = Logger.getLogger(this.getClass().toString());
+        Node node = new Node();
+        BasicGeometry geom = new BasicGeometry();
+            Material mat = new Material(assetManager, "Materials/Generated/IB3_base.j3m");
+        for (int i = 0; i < 266; i++) {
+            Spatial baseSenado = geom.makeAsset(assetManager, "Models/1de266/1de266.j3o",
+                    0, 0, 0, //position
+                    1, 1, 1, //scale
+                    0, 0, 0);
+            
+            baseSenado.rotate(
+                    0, new Float(i).floatValue()*0.6766917293233083f*-1*
+                       new Float(Math.PI).floatValue()/180f, 0);
+//            switch (i){
+//                case 0:{  mat.setColor("Color", ColorRGBA.Green); break;}
+//                case 51:{  mat.setColor("Color", ColorRGBA.Blue); break;}
+//                case 90:{  mat.setColor("Color", ColorRGBA.Red); break;}
+//                case 158:{  mat.setColor("Color", ColorRGBA.White); break;}
+//                case 198:{  mat.setColor("Color", ColorRGBA.Pink); break;}
+//                case 220:{  mat.setColor("Color", ColorRGBA.Orange); break;}
+//                case 240:{  mat.setColor("Color", ColorRGBA.Cyan); break;}
+//                case 258:{  mat.setColor("Color", ColorRGBA.Black); break;}
+//            }
+            log.info("rotacion " + 
+                    new Float(i).floatValue()*0.6766917293233083f);
+            
+        Material triar_material = mat.clone();
+            baseSenado.setMaterial(mat);
+            node.attachChild(baseSenado.clone());//rotate
+        }
+        
+        node.rotate(0, new Float(Math.PI).floatValue(), 0);
+        return node;
     }
+}

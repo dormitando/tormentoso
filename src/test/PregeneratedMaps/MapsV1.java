@@ -291,6 +291,24 @@ public class MapsV1 {
         mapa1.setItem(aItems);
 
         return mapa1;
+    }    
+    public TMap genSenado() {
+        TMap mapa1 = new TMap();
+        mapa1.setName("senado");
+        ArrayList<TItem> aItems = new ArrayList<TItem>();
+        System.out.println("setting senado");
+        aItems.add(new TItem());
+        aItems.get(aItems.size() - 1).setName("ISLA_CALAVERA");
+        aItems.get(aItems.size() - 1).setPos(0f, 0f, 0f);
+        aItems.get(aItems.size() - 1).setType_item(Dictionary.ELEC_SENADO);
+
+        mapa1.setItem(aItems);
+        
+         TCamera[] camaras = {new TCamera(new Vector3f(0,0,-20))};
+        camaras[0].setLookAt(new Vector3f(0f, 0, 0f));
+        mapa1.setCam(camaras);
+
+        return mapa1;
     }
 
     public TScene genScene1() {
@@ -313,6 +331,7 @@ public class MapsV1 {
         scene.addTMap(genBaleares());
         scene.addTMap(genMapNubes());
         scene.addTMap(genPedestales());
+        scene.addTMap(genSenado());
 
         return scene;
     }

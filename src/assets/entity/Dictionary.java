@@ -28,4 +28,5 @@ public class Dictionary {
     public static final String BASIC_ELEVATION = "basic elevation";
     public static final String ISLA_CALAVERA = "ISLA_CALAVERA";
     public static final String MAPA_BALEARES = "islas baleares";
+    public static final String ELEC_SENADO = "SENADO";
 }

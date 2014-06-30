@@ -79,11 +79,13 @@ public interface AssetGeneratorInterface {
 
     public Node makeMap(AssetManager assetManager, TMap mapa, BitmapText hud);
 
-    public Node makeBaseElevation(AssetManager assetMaster);
+    public Node makeBaseElevation(AssetManager assetManager);
 
-    public Node makeIslaCalavera(AssetManager assetMaster);
+    public Node makeIslaCalavera(AssetManager assetManager);
 
-    public Node makeIslaBaleares(AssetManager assetMaster);
+    public Node makeIslaBaleares(AssetManager assetManager);
+    
+    public Node makeSenado(AssetManager assetManager);
 
     public ArrayList<Node> generateScene(AssetManager assetManager,
             TScene scene,
