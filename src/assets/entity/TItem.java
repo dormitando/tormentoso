@@ -4,6 +4,8 @@
  */
 package assets.entity;
 
+import com.jme3.math.Vector3f;
+
 /**
  *
  * @author jmd
@@ -11,10 +13,17 @@ package assets.entity;
 public class TItem {
     
     String name = "";
-    float px = 0f, py = 0f, pz = 0f;
+   
+    Vector3f pos,rot,scale;
     String text;
     String type_item;
 
+    public TItem(){
+        pos = new Vector3f(0,0,0);
+        rot = new Vector3f(0,0,0);
+        scale = new Vector3f(1f,1f,1f);
+        text = new String("");
+    }
     public String getName() {
         return name;
     }
@@ -22,36 +31,55 @@ public class TItem {
     public void setName(String name) {
         this.name = name;
     }
-
-    public float getPx() {
-        return px;
+    public void setPos(float x, float y, float z){
+        pos = new Vector3f(x, y, z);
+    }
+    public void setScale(float x, float y, float z){
+        this.scale = new Vector3f(x, y, z);
+    }
+    public void setRot(float x, float y, float z){
+        this.rot = new Vector3f(x, y, z);
     }
 
-    public void setPx(float px) {
-        this.px = px;
+    public float getPx() {
+        return pos.x;
     }
 
     public float getPy() {
-        return py;
-    }
-
-    public void setPy(float py) {
-        this.py = py;
+        return pos.y;
     }
 
     public float getPz() {
-        return pz;
+        return pos.z;
     }
 
-    public void setPz(float pz) {
-        this.pz = pz;
+    public Vector3f getPos() {
+        return pos;
     }
+
+    public void setPos(Vector3f pos) {
+        this.pos = pos;
+    }
+
+    public Vector3f getRot() {
+        return rot;
+    }
+
+    public void setRot(Vector3f rot) {
+        this.rot = rot;
+    }
+
+    public Vector3f getScale() {
+        return scale;
+    }
+
+    public void setScale(Vector3f scale) {
+        this.scale = scale;
+    }
+
+   
     
-    public void setPos(float px,float  py,float  pz){
-        this.px = px;
-        this.py = py;
-        this.pz = pz;
-    }
+   
     public String getText() {
         return text;
     }

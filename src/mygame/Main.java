@@ -26,9 +26,12 @@ import com.jme3.post.filters.FogFilter;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.water.SimpleWaterProcessor;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import test.PregeneratedMaps.MapsV1;
 
@@ -55,6 +58,10 @@ public class Main extends SimpleApplication {
     private float camSpeed = 10f;
     private Integer camOrder = 0;
     private boolean camMove = false;
+    private boolean animSenado = false;
+    private Spatial animScale;
+    private float tiempoTotal = 0;
+    private Node senado;
 
     public static void main(String[] args) {
 
@@ -79,7 +86,8 @@ public class Main extends SimpleApplication {
          */
         Node be_endesa = new Node("luces");
         AmbientLight ambient = new AmbientLight();
-        ambient.setColor(ColorRGBA.White);
+        ambient.setColor(new ColorRGBA(0.2f, 0.2f, 0.2f, 0.5f));
+
         be_endesa.addLight(ambient);
         /**
          * A white, directional light source
@@ -149,7 +157,51 @@ public class Main extends SimpleApplication {
                 cam.lookAt(camActual.getLookAt(), new Vector3f(0, 1, 0));
             }
         }
+        if (animSenado) {
+            tiempoTotal = tiempoTotal + tpf;
+            float animTotal = 2f;
+            String mapName = maps.get(mapsIndex).getName();
+            Node node = rotating_scene;
+            if (mapName.equalsIgnoreCase(Dictionary.SENADO)) {
+//                        animScale = rootNode.getChild(Dictionary.SENADO);
+//                int i = 0;
+                if (senado == null || senado.descendantMatches(Dictionary.SENADO).isEmpty()) {
+                    senado = (Node) node.getChild(Dictionary.SENADO);
+                    rotating_scene.attachChild(senado);
+                }
+                float numSeg = senado.descendantMatches("senado").size();
+                if (numSeg == 0) {
+                    animSenado = false;
+                    senado.detachAllChildren();
+                    log.log(Level.SEVERE, "no hay segmentos para animar");
+                } else {
+                    float animSeg = animTotal / numSeg;
 
+//                    for (int i=0; i<()
+// hacer bucle de animación de los segmentos)
+                   
+                    log.info("encontrado elemento "
+                            + " animacion " + tiempoTotal);
+                    for (int i = 0; i < senado.descendantMatches("senado").size(); i++) {
+                        float animaScaleY = 0;
+                        if (tiempoTotal >= animTotal) {
+                            animSenado = false;
+                            animaScaleY = 1f;
+                        } else {
+                            animaScaleY = tiempoTotal / animTotal;
+                        }
+                        senado.descendantMatches("senado").get(i)
+                                .scale(1f, animaScaleY, 1f);
+                        
+                    }
+                }
+            }
+        } else {
+            tiempoTotal = 0;
+            animSenado = false;
+            if (senado != null)
+                senado.detachAllChildren();
+//        if (animScale != null)
 //        time +=tpf;
 //        // make the player rotate
 //        player.elementAt(0).rotate(0, 2*tpf, 0); 
@@ -161,6 +213,7 @@ public class Main extends SimpleApplication {
 //        helloText.setText((new Float(player.elementAt(1).getWorldTranslation().x)).toString());
 //        System.out.println(oscilation*move);
 //        System.out.flush();
+        }
     }
 
     private Vector3f animaVector(float tpf,
@@ -187,11 +240,12 @@ public class Main extends SimpleApplication {
 //        cam.
         flyCam.setMoveSpeed(flyCam.getMoveSpeed() * 10);
         setDisplayStatView(false);
-        inputManager.addMapping(Dictionary.MAP_NEXT, new KeyTrigger(KeyInput.KEY_PGUP));
-        inputManager.addMapping(Dictionary.MAP_PREVIUS, new KeyTrigger(KeyInput.KEY_PGDN));
+        inputManager.addMapping(Dictionary.MAP_NEXT, new KeyTrigger(KeyInput.KEY_PGDN));
+        inputManager.addMapping(Dictionary.ANIMATE_SCENE, new KeyTrigger(KeyInput.KEY_TAB));
+        inputManager.addMapping(Dictionary.MAP_PREVIUS, new KeyTrigger(KeyInput.KEY_PGUP));
         inputManager.addMapping("cam_info", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addListener(actionListener,
-                new String[]{Dictionary.MAP_PREVIUS,
+                new String[]{Dictionary.ANIMATE_SCENE, Dictionary.MAP_PREVIUS,
             Dictionary.MAP_NEXT, "cam_info"});
 //        System.out.println("keys iniciadas");
     }
@@ -202,26 +256,29 @@ public class Main extends SimpleApplication {
 //            System.out.println("iniciando key " + name + "key" + keyPressed);
             if (name.equals(Dictionary.MAP_NEXT) && keyPressed) {
 //                if (mapsIndex < maps.size() - 1) {
-                    try {
+                try {
 //                        node.detachChildNamed(maps.get(mapsIndex.intValue()).getName());
-                        node.detachAllChildren();
-                    } catch (Exception e) {
-                        log.severe("error " + e.getMessage());
-                    }
-                    mapsIndex = (mapsIndex + 1) % maps.size();
+                    node.detachAllChildren();
+                } catch (Exception e) {
+                    log.severe("error " + e.getMessage());
+                }
+                mapsIndex = (mapsIndex + 1) % maps.size();
 //                    System.out.println("mapsIndex " + mapsIndex);
-                    node.attachChild(maps.get(mapsIndex));
+                node.attachChild(maps.get(mapsIndex));
 
-                    TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
-                    if (camsLocal != null && camsLocal.length > 0) {
-                        cam.setLocation(camsLocal[0].getPosition());
-                        if (camsLocal[0].getOrientation() != null) {
-                            cam.setRotation(camsLocal[0].getOrientation());
-                        }if (camsLocal[0].getLookAt()!=null){
-                            cam.lookAt(camsLocal[0].getLookAt(), new Vector3f(0,1f,0));
-                        }
+                TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                if (camsLocal != null && camsLocal.length > 0) {
+                    cam.setLocation(camsLocal[0].getPosition());
+                    if (camsLocal[0].getOrientation() != null) {
+                        cam.setRotation(camsLocal[0].getOrientation());
                     }
-                    camOrder = 0;
+                    if (camsLocal[0].getLookAt() != null) {
+                        cam.lookAt(camsLocal[0].getLookAt(), new Vector3f(0, 1f, 0));
+                    }
+                }
+                camOrder = 0;
+                hudText.setText(maps.get(mapsIndex).getName());
+                System.out.println(maps.get(mapsIndex).getName());
 //                }
             }
             if (name.equals(Dictionary.MAP_PREVIUS) && keyPressed) {
@@ -238,14 +295,22 @@ public class Main extends SimpleApplication {
                         cam.setLocation(camsLocal[0].getPosition());
                         if (camsLocal[0].getOrientation() != null) {
                             cam.setRotation(camsLocal[0].getOrientation());
-                        }if (camsLocal[0].getLookAt()!=null){
-                            cam.lookAt(cams[0].getLookAt(), new Vector3f(0,1f,0));
+                        }
+                        if (camsLocal[0].getLookAt() != null) {
+                            cam.lookAt(cams[0].getLookAt(), new Vector3f(0, 1f, 0));
                         }
                     }
+                    hudText.setText(maps.get(mapsIndex).getName());
                     camOrder = 0;
                 }
             }
-            System.out.println("onAction " + name);
+            //Inicia animació d'escena
+            if (name.equals(Dictionary.ANIMATE_SCENE) && keyPressed && mapsIndex >= 0) {
+                String mapName = maps.get(mapsIndex).getName();
+                log.warning("nom de mapa " + mapName);
+                animSenado = true;
+            }
+
             if (name.equals("cam_info") && keyPressed) {
                 TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
                 if (camsLocal != null && camsLocal.length > 0) {

@@ -366,36 +366,66 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     @Override
     public Node makeSenado(AssetManager assetManager) {
         Logger log = Logger.getLogger(this.getClass().toString());
-        Node node = new Node();
+        Node node = new Node(Dictionary.SENADO);
         BasicGeometry geom = new BasicGeometry();
-            Material mat = new Material(assetManager, "Materials/Generated/IB3_base.j3m");
+        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        mat.setColor("Specular", ColorRGBA.Cyan);
+        mat.setBoolean("UseMaterialColors", true);
+        mat.setColor("Ambient", new ColorRGBA(0.8f, 0.8f, 0.8f, 0.2f));
+        ColorRGBA colorSector = new ColorRGBA();
         for (int i = 0; i < 266; i++) {
             Spatial baseSenado = geom.makeAsset(assetManager, "Models/1de266/1de266.j3o",
                     0, 0, 0, //position
-                    1, 1, 1, //scale
+                    1, 0.5f, 1, //scale
                     0, 0, 0);
-            
+            baseSenado.setName("senado");
             baseSenado.rotate(
-                    0, new Float(i).floatValue()*0.6766917293233083f*-1*
-                       new Float(Math.PI).floatValue()/180f, 0);
-//            switch (i){
-//                case 0:{  mat.setColor("Color", ColorRGBA.Green); break;}
-//                case 51:{  mat.setColor("Color", ColorRGBA.Blue); break;}
-//                case 90:{  mat.setColor("Color", ColorRGBA.Red); break;}
-//                case 158:{  mat.setColor("Color", ColorRGBA.White); break;}
-//                case 198:{  mat.setColor("Color", ColorRGBA.Pink); break;}
-//                case 220:{  mat.setColor("Color", ColorRGBA.Orange); break;}
-//                case 240:{  mat.setColor("Color", ColorRGBA.Cyan); break;}
-//                case 258:{  mat.setColor("Color", ColorRGBA.Black); break;}
-//            }
-            log.info("rotacion " + 
-                    new Float(i).floatValue()*0.6766917293233083f);
-            
-        Material triar_material = mat.clone();
-            baseSenado.setMaterial(mat);
+                    0, new Float(i).floatValue() * 0.6766917293233083f * -1
+                    * new Float(Math.PI).floatValue() / 180f, 0);
+//            baseSenado.scale(0);
+            switch (i) {
+                case 0: {
+                    colorSector = new ColorRGBA(0.8f, 0.1f, 0.1f, 0.2f);
+                    break;
+                }
+                case 51: {
+                    colorSector = new ColorRGBA(0.1f, 0.8f, 0.1f, 0.2f);
+                    break;
+                }
+                case 90: {
+                    colorSector = new ColorRGBA(0.1f, 0.1f, 0.8f, 0.2f);
+                    break;
+                }
+                case 158: {
+                    colorSector = new ColorRGBA(0.1f, 0.8f, 0.8f, 0.2f);
+                    break;
+                }
+                case 198: {
+                    colorSector = new ColorRGBA(0.8f, 0.1f, 0.8f, 0.2f);
+                    break;
+                }
+                case 220: {
+                    colorSector = new ColorRGBA(0.8f, 0.8f, 0.1f, 0.2f);
+                    break;
+                }
+                case 240: {
+                    colorSector = new ColorRGBA(0.5f, 0.8f, 0.5f, 0.2f);
+                    break;
+                }
+                case 258: {
+                    colorSector = new ColorRGBA(0.1f, 0.1f, 0.1f, 0.2f);
+                    break;
+                }
+            }
+            mat.setColor("Ambient", colorSector);
+            mat.setColor("Diffuse", colorSector);
+            mat.setColor("Specular", colorSector);
+
+            Material triar_material = mat.clone();
+            baseSenado.setMaterial(triar_material);
             node.attachChild(baseSenado.clone());//rotate
         }
-        
+
         node.rotate(0, new Float(Math.PI).floatValue(), 0);
         return node;
     }

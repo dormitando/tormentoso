@@ -327,11 +327,11 @@ public class MapsV1 {
 
     public TScene genScene2() {
         TScene scene = new TScene();
+        scene.addTMap(genSenado());
         scene.setName("Test2");
         scene.addTMap(genBaleares());
         scene.addTMap(genMapNubes());
         scene.addTMap(genPedestales());
-        scene.addTMap(genSenado());
 
         return scene;
     }
