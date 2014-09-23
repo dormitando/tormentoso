@@ -6,6 +6,7 @@ package assets.entity;
 
 import com.jme3.scene.Node;
 import java.util.ArrayList;
+import org.json.JSONObject;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class TScene {
     String name = "";
     String descrition = "";
-    ArrayList<TMap> maps = new ArrayList<TMap>();;
+    ArrayList<TMap> maps = new ArrayList<TMap>();
 
     public String getName() {
         return name;
@@ -43,4 +44,7 @@ public class TScene {
     public void addTMap(TMap map){
         maps.add(map);
     }
+    
+ 
+    
 }

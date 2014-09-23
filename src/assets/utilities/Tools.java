@@ -48,5 +48,12 @@ public class Tools {
     public float collideFloor(Vector3f pos, Node floorGroup){
         return collide(pos, new Vector3f(0, -1, 0), floorGroup).getDistance();
     }
+
+    public Vector3f normalize(Vector3f vector3f) {
+        Vector3f v3n = vector3f.clone();
+        v3n.x = vector3f.z * 80f /450f;
+        v3n.z = vector3f.x * 100f /850f;
+        return v3n;
+    }
     
 }

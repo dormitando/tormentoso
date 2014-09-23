@@ -6,6 +6,9 @@ import assets.entity.TMap;
 import assets.entity.TScene;
 import assets.generator.AssetGeneratorImplements;
 import assets.generator.AssetGeneratorInterface;
+import assets.generator.SceneGeneratorImplements;
+import assets.generator.SceneGeneratorInterface;
+import assets.utilities.PropertiesFile;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
@@ -29,6 +32,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.water.SimpleWaterProcessor;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -77,8 +81,8 @@ public class Main extends SimpleApplication {
         AmbientLight general_light = new AmbientLight();
         general_light.setColor(ColorRGBA.White);
         rootNode.addLight(general_light);
-        DirectionalLight sun = new DirectionalLight();
-        sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f));
+//        DirectionalLight sun = new DirectionalLight();
+//        sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f));
 //        rootNode.addLight(sun);
 
         /**
@@ -99,6 +103,7 @@ public class Main extends SimpleApplication {
         be_endesa.addLight(sunny);
 
         rootNode.attachChild(be_endesa);
+
         viewPort.setBackgroundColor(ColorRGBA.Blue);
         addBackground();
         rootNode.attachChild(reflexing_water);
@@ -107,8 +112,22 @@ public class Main extends SimpleApplication {
         initKeys();
         setUpHUD();
         addWater();
-
-        selftest();
+        SceneGeneratorInterface sceneGen = new SceneGeneratorImplements();
+        TScene escena;
+        try {
+            PropertiesFile prop = new PropertiesFile("cnf/properties.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        escena = sceneGen.loadSceneURL("http://localhost/html5/escena.json");
+        this.scene = escena;
+        loadScene(escena);
+//        AssetGeneratorInterface agen = new AssetGeneratorImplements() {
+//        };
+//        for (TMap scenemaps : this.scene.getMaps()) {
+//            maps.add(agen.makeMap(assetManager, scenemaps, hudText));
+//        }
+//        hudText.setText(this.scene.getName());
     }
 
     /* This is the update loop */
@@ -179,7 +198,7 @@ public class Main extends SimpleApplication {
 
 //                    for (int i=0; i<()
 // hacer bucle de animación de los segmentos)
-                   
+
                     log.info("encontrado elemento "
                             + " animacion " + tiempoTotal);
                     for (int i = 0; i < senado.descendantMatches("senado").size(); i++) {
@@ -192,15 +211,16 @@ public class Main extends SimpleApplication {
                         }
                         senado.descendantMatches("senado").get(i)
                                 .scale(1f, animaScaleY, 1f);
-                        
+
                     }
                 }
             }
         } else {
             tiempoTotal = 0;
             animSenado = false;
-            if (senado != null)
+            if (senado != null) {
                 senado.detachAllChildren();
+            }
 //        if (animScale != null)
 //        time +=tpf;
 //        // make the player rotate
@@ -262,18 +282,19 @@ public class Main extends SimpleApplication {
                 } catch (Exception e) {
                     log.severe("error " + e.getMessage());
                 }
+                log.info("maps size ");
                 mapsIndex = (mapsIndex + 1) % maps.size();
 //                    System.out.println("mapsIndex " + mapsIndex);
                 node.attachChild(maps.get(mapsIndex));
 
-                TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
-                if (camsLocal != null && camsLocal.length > 0) {
-                    cam.setLocation(camsLocal[0].getPosition());
-                    if (camsLocal[0].getOrientation() != null) {
-                        cam.setRotation(camsLocal[0].getOrientation());
+                ArrayList<TCamera> camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                if (camsLocal != null && !camsLocal.isEmpty()) {
+                    cam.setLocation(camsLocal.get(0).getPosition());
+                    if (camsLocal.get(0).getOrientation() != null) {
+                        cam.setRotation(camsLocal.get(0).getOrientation());
                     }
-                    if (camsLocal[0].getLookAt() != null) {
-                        cam.lookAt(camsLocal[0].getLookAt(), new Vector3f(0, 1f, 0));
+                    if (camsLocal.get(0).getLookAt() != null) {
+                        cam.lookAt(camsLocal.get(0).getLookAt(), new Vector3f(0, 1f, 0));
                     }
                 }
                 camOrder = 0;
@@ -290,14 +311,14 @@ public class Main extends SimpleApplication {
                     mapsIndex = (mapsIndex - 1) % maps.size();
 //                    System.out.println("mapsIndex " + mapsIndex);
                     node.attachChild(maps.get(mapsIndex));
-                    TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
-                    if (camsLocal != null && camsLocal.length > 0) {
-                        cam.setLocation(camsLocal[0].getPosition());
-                        if (camsLocal[0].getOrientation() != null) {
-                            cam.setRotation(camsLocal[0].getOrientation());
+                    ArrayList<TCamera> camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                    if (camsLocal != null && !camsLocal.isEmpty()) {
+                        cam.setLocation(camsLocal.get(0).getPosition());
+                        if (camsLocal.get(0).getOrientation() != null) {
+                            cam.setRotation(camsLocal.get(0).getOrientation());
                         }
-                        if (camsLocal[0].getLookAt() != null) {
-                            cam.lookAt(cams[0].getLookAt(), new Vector3f(0, 1f, 0));
+                        if (camsLocal.get(0).getLookAt() != null) {
+                            cam.lookAt(camsLocal.get(0).getLookAt(), new Vector3f(0, 1f, 0));
                         }
                     }
                     hudText.setText(maps.get(mapsIndex).getName());
@@ -312,13 +333,13 @@ public class Main extends SimpleApplication {
             }
 
             if (name.equals("cam_info") && keyPressed) {
-                TCamera[] camsLocal = scene.getMaps().get(mapsIndex).getCam();
-                if (camsLocal != null && camsLocal.length > 0) {
-                    switch (camsLocal.length) {
+                ArrayList<TCamera> camsLocal = scene.getMaps().get(mapsIndex).getCam();
+                if (camsLocal != null && !camsLocal.isEmpty()) {
+                    switch (camsLocal.size()) {
                         case 1:
-                            cam.setLocation(camsLocal[0].getPosition());
-                            if (camsLocal[0].getOrientation() != null) {
-                                cam.setRotation(camsLocal[0].getOrientation());
+                            cam.setLocation(camsLocal.get(0).getPosition());
+                            if (camsLocal.get(0).getOrientation() != null) {
+                                cam.setRotation(camsLocal.get(0).getOrientation());
                             }
                             break;
                         default:
@@ -326,11 +347,12 @@ public class Main extends SimpleApplication {
                                 camActual = new TCamera(cam.getLocation());
                                 camActual.setLookAt(cam.getLocation().add(cam.getDirection()));
                             }
-                            camOrder = (camOrder + 1) % camsLocal.length;
+                            camOrder = (camOrder + 1) % camsLocal.size();
+                            ;
                             cams[0] = new TCamera(camActual.getPosition());
                             cams[0].setLookAt(camActual.getLookAt());
-                            cams[1] = scene.getMaps().get(mapsIndex).getCam()[camOrder];
-                            cams[1].setLookAt(scene.getMaps().get(mapsIndex).getCam()[camOrder].getLookAt());
+                            cams[1] = scene.getMaps().get(mapsIndex).getCam().get(camOrder);
+                            cams[1].setLookAt(scene.getMaps().get(mapsIndex).getCam().get(camOrder).getLookAt());
 
                             camMove = true;
                     }
@@ -342,16 +364,21 @@ public class Main extends SimpleApplication {
         }
     };
 
-    private void selftest() {
+    private void loadScene(TScene escena) {
         AssetGeneratorInterface agen = new AssetGeneratorImplements() {
         };
 
         MapsV1 testMap = new MapsV1();
 
 //        rootNode.attachChild(agen.makeReference(assetManager));
-        this.scene = testMap.genScene2();
+        if (scene == null) {
+            this.scene = testMap.genScene2();
+        } else {
+            this.scene = escena;
+        }
         for (TMap scenemaps : this.scene.getMaps()) {
-            maps.add(agen.makeMap(assetManager, scenemaps, hudText));
+            Node mymap = agen.makeMap(assetManager, scenemaps, hudText);
+            maps.add(mymap);
         }
         hudText.setText(this.scene.getName());
     }

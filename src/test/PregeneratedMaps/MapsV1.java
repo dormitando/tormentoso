@@ -251,14 +251,24 @@ public class MapsV1 {
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CLOUD);
         mapa1.setItem(aItems);
 
-        TCamera[] camaras = {new TCamera(new Vector3f(3.121f, 78.341f, 16.758f)),
-            new TCamera(new Vector3f(-29.549942f, 21.233969f, 19.374535f)),
-            new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f)),
-            new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f)),};
-        camaras[0].setLookAt(new Vector3f(-10f, 0, -40f));
-        camaras[1].setLookAt(new Vector3f(-40f, 0, -10f));
-        camaras[2].setLookAt(new Vector3f(0f, 0, -40f));
-        camaras[3].setLookAt(new Vector3f(35f, 0, -60f));
+        ArrayList<TCamera> camaras = new ArrayList<>();
+        
+        TCamera c1 = new TCamera(new Vector3f(3.121f, 78.341f, 16.758f));
+        c1.setLookAt(new Vector3f(-10f, 0, -40f));
+        camaras.add(c1);
+        
+        c1 = new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f));
+        c1.setLookAt(new Vector3f(-40f, 0, -10f));
+        camaras.add(c1);
+        
+        c1 = new TCamera(new Vector3f(3.063681f, 37.992195f, 0.3624136f));
+        c1.setLookAt(new Vector3f(0f, 0, -40f));
+        camaras.add(c1);
+        
+        c1 = new TCamera(new Vector3f(38.067627f, 26.996294f, -33.66666f));
+        c1.setLookAt(new Vector3f(35f, 0, -60f));
+        camaras.add(c1);
+        
         mapa1.setCam(camaras);
         return mapa1;
     }
@@ -304,9 +314,9 @@ public class MapsV1 {
 
         mapa1.setItem(aItems);
         
-         TCamera[] camaras = {new TCamera(new Vector3f(0,0,-20))};
-        camaras[0].setLookAt(new Vector3f(0f, 0, 0f));
-        mapa1.setCam(camaras);
+//         TCamera[] camaras = {new TCamera(new Vector3f(0,0,-20))};
+//        camaras[0].setLookAt(new Vector3f(0f, 0, 0f));
+//        mapa1.setCam(camaras);
 
         return mapa1;
     }
@@ -330,6 +340,7 @@ public class MapsV1 {
         scene.addTMap(genSenado());
         scene.setName("Test2");
         scene.addTMap(genBaleares());
+        scene.addTMap(genAgumon());
         scene.addTMap(genMapNubes());
         scene.addTMap(genPedestales());
 

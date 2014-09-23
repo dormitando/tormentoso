@@ -268,7 +268,7 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
     @Override
     public Spatial makeAgumon(AssetManager assetManager, String name, float x, float y, float z) {
         BasicGeometry geom = new BasicGeometry();
-        return geom.makeAsset(assetManager, "Models/patio/patio.j3o",
+        return geom.makeAsset(assetManager, "Models/sw2/sw2.j3o",
                 x, y, z, //position
                 1, 1, 1, //scale
                 0, 0, 0);//rotate
