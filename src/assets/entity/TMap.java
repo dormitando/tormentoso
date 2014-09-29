@@ -4,6 +4,7 @@
  */
 package assets.entity;
 
+import com.jme3.cinematic.MotionPath;
 import java.util.ArrayList;
 
 /**
@@ -15,8 +16,11 @@ public class TMap {
     private int position = 0;
     ArrayList <TItem> item;
     private ArrayList <TCamera> cam; //posiciones y orientaciones de la camara
+    private MotionPath path = new MotionPath();
     
     void TMap(){
+        path.setCycle(true);
+        path.setCurveTension(0.83f);
     }
 
     public String getName() {
@@ -66,6 +70,12 @@ public class TMap {
 
     public void setCam(ArrayList<TCamera> cam) {
         this.cam = cam;
+        for (TCamera c: cam){
+            path.addWayPoint(c.getPosition());
+        }
+    }
+    public MotionPath getMotionpath(){
+        return this.path;
     }
 
     

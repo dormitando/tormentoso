@@ -40,6 +40,7 @@ public class Dictionary {
     public static final String DESCRIPCIO = "descripcio";
     public static final String ELEMENT = "element";
     public static final String MAPA = "mapa";
+    public static final String TEXTE = "texte";
     public static final String TIPUS_ELEMENT = "tipus_element";
     public static final String TIPUS_CAMERA = "camera";
     

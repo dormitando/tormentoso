@@ -67,6 +67,10 @@ public class THarvester {
         aItems.get(aItems.size() - 1).setName(nomMapa);
         aItems.get(aItems.size() - 1).setPos(0f, 0f, 0f);
         aItems.get(aItems.size() - 1).setType_item(Dictionary.CAMPS_ESCENA.get(background));
+        //afegim la càmara inicial
+        TCamera cam = new TCamera(new Vector3f(0, 115.320496f, 12.418017f));
+        cam.setLookAt(new Vector3f(0, 0, -30f));
+        camaras.add(cam);
         while (keys.hasNext()) {
             String key = (String) keys.next();
             log.info("key " + key);
@@ -77,16 +81,37 @@ public class THarvester {
                     Dictionary.CAMPS_ESCENA.get("posicio"));
             String typeElement = item.getString(
                     Dictionary.CAMPS_ESCENA.get("tipus_element"));
+            String texte;
+            try {
+                texte = item.getString(
+                        Dictionary.CAMPS_ESCENA.get(Dictionary.TEXTE));
+            } catch (Exception e) {
+                texte = null;
+            }
             Float px, pz;
             Tools tool = new Tools();
+            Integer pos;
+
+
             switch (typeElement) {
                 case Dictionary.TIPUS_CAMERA:
+                    log.fine("carregant camera");
                     px = new Float(position.getDouble(Dictionary.CAMPS_ESCENA.get("px")));
                     pz = new Float(position.getDouble(Dictionary.CAMPS_ESCENA.get("pz")));
-                    TCamera cam = new TCamera(tool.normalize(new Vector3f(px, 10f, pz - 10f)));
+                    try {
+                        pos = new Integer(texte);
+                    } catch (Exception e) {
+                        pos = camaras.size();
+                    }
+                    cam = new TCamera(tool.normalize(new Vector3f(px + 60f, 30f, pz)));
                     cam.setLookAt(tool.normalize(new Vector3f(px, 0f, pz)));
 
-                    camaras.add(cam);
+//                    camaras.add
+                    if (pos<camaras.size()){
+                        camaras.add(pos.intValue(), cam);
+                    }else{
+                        camaras.add(cam);
+                    }
                     break;
                 default:
                     aItems.add(new TItem());
@@ -94,7 +119,7 @@ public class THarvester {
                     aItems.get(aItems.size() - 1).setType_item(Dictionary.CAMPS_ESCENA.get(typeElement));
                     px = new Float(position.getDouble(Dictionary.CAMPS_ESCENA.get("px")));
                     pz = new Float(position.getDouble(Dictionary.CAMPS_ESCENA.get("pz")));
-                    aItems.get(aItems.size() -1).setPos(tool.normalize(new Vector3f(px.floatValue(), 10f, pz.floatValue())));
+                    aItems.get(aItems.size() - 1).setPos(tool.normalize(new Vector3f(px.floatValue(), 10f, pz.floatValue())));
 //                    aItems.get(aItems.size() -1).setPos(tool.normalize(px.floatValue(), 10f, pz.floatValue()));
                     break;
             }

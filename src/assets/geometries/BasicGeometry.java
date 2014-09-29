@@ -49,43 +49,10 @@ public class BasicGeometry extends Geometry {
         Node node = new Node(name);
         Material mat_terrain;
         TerrainQuad terrain;
-        /**
-         * 1. Create terrain material and load four textures into it.
-         */
-//        mat_terrain = new Material(assetManager,
-//                "Common/MatDefs/Terrain/TerrainLighting.j3md");
-//        Material sphereMat = new Material(assetManager,
-//                "Common/MatDefs/Light/Lighting.j3md");
-
-        /**
-         * 1.1) Add ALPHA map (for red-blue-green coded splat textures)
-         */
-//        mat_terrain.
-//        mat_terrain.setTexture("AlphaMap", assetManager.loadTexture(
-//                "Textures/islands/balearesAlpha.png"));
-//        mat_terrain.setTexture("NormalMap", assetManager.loadTexture(
-//                "Textures/islands/balearesNormal.jpg"));
-
+       
         Material terrain_mat = new Material(assetManager,
                 "Common/MatDefs/Terrain/TerrainLighting.j3md");
-//        terrain_mat.setBoolean("useTriPlanarMapping", false);
-//        terrain_mat.setBoolean("WardIso", true);
-//        terrain_mat.setTexture("AlphaMap", assetManager.loadTexture(
-//                "Textures/islands/balearesAlpha2.png"));
 
-//        Texture grass = assetManager.loadTexture(
-//                texture);
-//        grass.setWrap(WrapMode.Repeat);
-//        terrain_mat.setTexture("DiffuseMap", grass);
-//        terrain_mat.setFloat("DiffuseMap_0_scale", 1);
-//        Texture normalMap0 = assetManager.loadTexture(
-//                "Textures/islands/balearesNormal.jpg");
-//        normalMap0.setWrap(WrapMode.Repeat);
-//        terrain_mat.setTexture("NormalMap", normalMap0);
-
-        
-//        terrain_mat = new Material(assetManager, 
-//            "Common/MatDefs/Terrain/TerrainLighting.j3md");
         
     terrain_mat.setBoolean("useTriPlanarMapping", false);
     terrain_mat.setBoolean("WardIso", true);    

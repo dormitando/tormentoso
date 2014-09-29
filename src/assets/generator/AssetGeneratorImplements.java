@@ -175,6 +175,7 @@ public abstract class AssetGeneratorImplements implements AssetGeneratorInterfac
             }
             item = mapa.nextItem();
         }
+//         n.attachChild(this.makeReference(assetManager));
         return n;
     }
 

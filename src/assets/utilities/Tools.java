@@ -51,8 +51,8 @@ public class Tools {
 
     public Vector3f normalize(Vector3f vector3f) {
         Vector3f v3n = vector3f.clone();
-        v3n.x = vector3f.z * 80f /450f;
-        v3n.z = vector3f.x * 100f /850f;
+        v3n.x = vector3f.z *200/800f -95;
+        v3n.z = vector3f.x *(200/1.77777777f)/450f -90;
         return v3n;
     }
     

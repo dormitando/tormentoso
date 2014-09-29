@@ -31,12 +31,24 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
+import com.jme3.system.AppSettings;
+import com.jme3.system.JmeCanvasContext;
 import com.jme3.water.SimpleWaterProcessor;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import test.PregeneratedMaps.MapsV1;
 
 /**
@@ -66,17 +78,105 @@ public class Main extends SimpleApplication {
     private Spatial animScale;
     private float tiempoTotal = 0;
     private Node senado;
+    final static Frame viewer = new Frame("Viewer");
 
     public static void main(String[] args) {
 
-        Main app = new Main();
+//        Main app = new Main();
 
-        app.start();
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GraphicsDevice[] lDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+                int i = 1;
+                GraphicsDevice device = lDevice[2];
+
+                AppSettings settings = new AppSettings(true);
+                settings.setSettingsDialogImage("Interface/splashScreen/Mosca_positiu_1.jpg");
+
+                Main canvasApplication = new Main();
+                canvasApplication.setPauseOnLostFocus(false);
+                canvasApplication.setSettings(settings);
+                canvasApplication.createCanvas(); // create canvas!
+                JmeCanvasContext ctx = (JmeCanvasContext) canvasApplication.getContext();
+//                ctx.setAutoFlushFrames(true);
+//                ctx.
+                ctx.setSystemListener(canvasApplication);
+                Dimension dim = new Dimension(1920, 1080);
+                ctx.getCanvas().setPreferredSize(dim);
+
+                JFrame window = new JFrame("Swing Application");
+                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                JPanel panel = new JPanel(new FlowLayout()); // a panel
+//// add all your Swing components ...
+//                panel.add(new JButton("Some Swing Component"));
+// add the JME canvas
+                panel.add(ctx.getCanvas());
+                panel.setBorder(new EmptyBorder(1, 1, 1, 1));
+//                panel.set
+
+                settings.setWidth(1920);
+                settings.setHeight(1080);
+                settings.setTitle("Temps");
+//                window.setUndecorated(true);
+
+//                device.setFullScreenWindow(window);
+//                device.setDisplayMode(new java.awt.DisplayMode(1024, 768, 32, 60));
+                
+
+                ctx.setSettings(settings);
+
+                window.setLocation(1920, 0);
+                window.add(panel);
+                window.pack();
+                window.setVisible(true);
+
+
+
+//                canvasApplication.startCanvas();
+                canvasApplication.paused = false;
+                canvasApplication.startCanvas(false);
+            }
+        });
+
+
+//        settings = settings.
+
+
+//
+//        app.createCanvas();
+//        settings.setRenderer(AppSettings.LWJGL_OPENGL1);
+
+
+//        final JmeCanvasContext context = (JmeCanvasContext) app.getContext();
+//
+// instantiate the viewer frame to provide fake fullscreen
+
+//        viewer.add(context.getCanvas());
+//        viewer.setUndecorated(true);
+//        viewer.setVisible(true);
+//        viewer.setSize(1920, 1080);
+////        viewer.setLocation(1920, 0);
+////        viewer.setAlwaysOnTop(true);
+//        viewer.setVisible(true);
+
+//        device.setDisplayMode(device.getDisplayMode());
+//        app.setSettings(settings);
+//        app.start();
+
+//        device.setFullScreenWindow(viewer);
+//
+//        device.setDisplayMode(new java.awt.DisplayMode(1920, 1080, 32, 60));
+
+
     }
 
     @Override
     public void simpleInitApp() {
 
+        flyCam.setDragToRotate(true);
         // You must add a light to make the model visible
         AmbientLight general_light = new AmbientLight();
         general_light.setColor(ColorRGBA.White);
@@ -111,7 +211,7 @@ public class Main extends SimpleApplication {
 
         initKeys();
         setUpHUD();
-        addWater();
+//        addWater();
         SceneGeneratorInterface sceneGen = new SceneGeneratorImplements();
         TScene escena;
         try {
@@ -173,7 +273,7 @@ public class Main extends SimpleApplication {
 
                 cam.setLocation(camActual.getPosition());
 
-                cam.lookAt(camActual.getLookAt(), new Vector3f(0, 1, 0));
+                cam.lookAt(camActual.getLookAt(), new Vector3f(0, 1f, 0));
             }
         }
         if (animSenado) {
@@ -254,9 +354,10 @@ public class Main extends SimpleApplication {
 
     private void initKeys() {
         //deshabilitar movimiento de camara
-//        flyCam.setEnabled(false);
-        cam.setLocation(new Vector3f(3.121f, 78.341f, 16.758f));
-        cam.setRotation(new Quaternion(-0.0356f, 0.8491f, -0.5244f, -0.05438f));
+        flyCam.setEnabled(false);
+
+        cam.setLocation(new Vector3f(-0.78524536f, 115.320496f, 12.418017f));
+        cam.setRotation(new Quaternion(0.0025935215f, 0.8088461f, -0.5879789f, 0.006482597f));
 //        cam.
         flyCam.setMoveSpeed(flyCam.getMoveSpeed() * 10);
         setDisplayStatView(false);
@@ -294,7 +395,7 @@ public class Main extends SimpleApplication {
                         cam.setRotation(camsLocal.get(0).getOrientation());
                     }
                     if (camsLocal.get(0).getLookAt() != null) {
-                        cam.lookAt(camsLocal.get(0).getLookAt(), new Vector3f(0, 1f, 0));
+                        cam.lookAt(camsLocal.get(0).getLookAt(), new Vector3f(0f, 1f, 0));
                     }
                 }
                 camOrder = 0;
